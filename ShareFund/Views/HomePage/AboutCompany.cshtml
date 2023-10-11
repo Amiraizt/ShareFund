@@ -1,0 +1,185 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IHtmlLocalizer<SharedResource> Localizer
+@model AboutCompanyAdminModel
+@{
+    ViewData["Title"] = "AboutCompany";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="app-title">
+    <div>
+        <h1><i class="fa fa-file-text-o"></i> @Localizer["AboutCompany"] </h1>
+
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h4 class="text-center offset-md-4 col-md-4"> @Localizer["AboutCompany"] </h4>
+
+            <div class="tile-title-w-btn">
+                @*                <h3 class="title"> <p><a asp-action="CreateRound" class="btn btn-primary icon-btn"><i class="fa fa-plus"></i>	</a></p></h3>
+                *@
+                @*<button type="button" class="btn btn-primary modalTrigger" onclick="ShowSliderImageModel()" data-toggle="modal" data-target="#exampleModal">
+                Add
+                </button>*@
+            </div>
+            <div class="tile-body">
+                <table class="table table-hover table-bordered" name="sampleTable">
+                    <thead>
+                        <tr>
+                            <th>@Localizer["Position"]</th>
+                            <th>@Localizer["NewValueAR"]</th>
+                            <th>@Localizer["NewValueEN"]</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td>@Localizer["AboutCompany"] </td>
+                            <td>@Model.AboutCompanyAR</td>
+                            <td>@Model.AboutCompanyEN</td>
+                            <td>
+                                <button type="button" class="btn btn-warning  modalTrigger" onclick="ShowAreaModel('@Consts.AboutCompanySetting','@Model.AboutCompanyAR','@Model.AboutCompanyEN','AboutCompany')" data-toggle="modal" data-target="#exampleModal">
+                                    <i class="fa fa-lg fa-edit"></i>  @Localizer["Edit"]
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>@Localizer["MainCompetitiveAdvantage"] </td>
+                            <td>@Model.CompetitiveAdvantageTitleAR</td>
+                            <td>@Model.CompetitiveAdvantageTitleEN</td>
+                            <td>
+                                <button type="button" class="btn btn-warning modalTrigger" onclick="ShowModel('@Consts.CompetitiveAdvantageTitleSetting','@Model.CompetitiveAdvantageTitleAR','@Model.CompetitiveAdvantageTitleEN','AboutCompany')" data-toggle="modal" data-target="#exampleModal">
+                                    <i class="fa fa-lg fa-edit"></i>  @Localizer["Edit"]
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h4 class="text-center offset-md-4 col-md-4"> @Localizer["TheCompetitiveAdvantage"] </h4>
+            <div class="tile-title-w-btn">
+
+                @*                <h3 class="title"> <p><a asp-action="CreateRound" class="btn btn-primary icon-btn"><i class="fa fa-plus"></i>	</a></p></h3>
+                *@
+                <button type="button" class="btn btn-primary modalTrigger" onclick="ShowAdvantagesModal()" data-toggle="modal" data-target="#exampleModal">
+                    <i class="fa fa-lg fa-plus"></i>      @Localizer["Add"]
+                </button>
+            </div>
+            <div class="tile-body">
+                <table class="table table-hover table-bordered" name="sampleTable">
+                    <thead>
+                        <tr>
+                            <th>@Localizer["NewValueAR"]</th>
+                            <th>@Localizer["NewValueEN"]</th>
+                            <th>@Localizer["Image"]</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.Advantages)
+                        {
+                            <tr>
+                                <td>@item.TitleAR</td>
+                                <td>@item.TitleEN</td>
+                                <td><img src="/img/@item.Icon" style="height:100px;width:100px" /></td>
+                                <td><a asp-action="DeleteSingleTextByID" new{ onclick="return confirm('Do you want to delete the field ?');" asp-route-settingID="@item.ID"> <i class="fa fa-lg fa-trash"></i> @Localizer["Delete"]</a></td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h4 class="text-center offset-md-4 col-md-4"> @Localizer["Counter"] </h4>
+            <div class="tile-title-w-btn">
+                @*                <h3 class="title"> <p><a asp-action="CreateRound" class="btn btn-primary icon-btn"><i class="fa fa-plus"></i>	</a></p></h3>
+                *@
+                <button type="button" class="btn btn-primary modalTrigger" onclick="ShowCountersModal()" data-toggle="modal" data-target="#exampleModal">
+                    <i class="fa fa-lg fa-plus"></i>   @Localizer["Add"]
+                </button>
+            </div>
+            <div class="tile-body">
+                <table class="table table-hover table-bordered" name="sampleTable">
+                    <thead>
+                        <tr>
+                            <th>@Localizer["NewValueAR"] </th>
+                            <th>@Localizer["NewValueEN"] </th>
+                            <th>@Localizer["Count"] </th>
+                            <th>@Localizer["Image"]</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.Counters)
+                        {
+                            <tr>
+                                <td>@item.LabelAR</td>
+                                <td>@item.LabelEN</td>
+                                <td>@item.Count</td>
+                                <td><img src="/img/@item.Icon" style="height:100px;width:100px" /></td>
+                                <td><a asp-action="DeleteMultipleTextByID" new{ onclick="return confirm('Do you want to delete the field ?');" asp-route-settingID="@item.ID">   <i class="fa fa-lg fa-trash"></i>  @Localizer["Delete"]</a></td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h4 class="text-center offset-md-4 col-md-4"> @Localizer["Client"] </h4>
+            <div class="tile-title-w-btn">
+                @*                <h3 class="title"> <p><a asp-action="CreateRound" class="btn btn-primary icon-btn"><i class="fa fa-plus"></i>	</a></p></h3>
+                *@
+                <button type="button" class="btn btn-primary modalTrigger" onclick="ShowClientModal()" data-toggle="modal" data-target="#exampleModal">
+                    <i class="fa fa-lg fa-plus"></i>      @Localizer["Add"]
+                </button>
+            </div>
+            <div class="tile-body">
+                <div class="row">
+                    @foreach (var item in Model.Clients)
+                    {
+
+                        <div class="col-md-3">
+                            <div class="tile">
+                                <div class="tile-title-w-btn">
+                                    <div class="btn-group"><a class="btn btn-danger" new{ onclick="return confirm('Do you want to delete the field ?');" asp-action="DeleteSettingByID" asp-route-settingID="@item.ID"><i class="fa fa-lg fa-trash"></i></a></div>
+                                </div>
+                                <div class="tile-body">
+                                    <center>
+                                        <img src="/img/@item.Image" style="height:150px;width:150px" />
+                                    </center>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

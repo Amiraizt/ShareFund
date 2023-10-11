@@ -1,0 +1,49 @@
+﻿@model List<CategoryListModel>
+@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IHtmlLocalizer<SharedResource> Localizer
+@{
+    ViewData["Title"] = "Categories";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h4 class="text-center offset-md-4 col-md-4"> @Localizer["NewsCategories"] </h4>
+
+            <div class="tile-title-w-btn">
+                @*                <h3 class="title"> <p><a asp-action="CreateRound" class="btn btn-primary icon-btn"><i class="fa fa-plus"></i>	</a></p></h3>
+                *@
+                <button type="button" class="btn btn-primary modalTrigger" onclick="ShowNewsCategoryModal()" data-toggle="modal" data-target="#exampleModal">
+                    @Localizer["Add"]
+                </button>
+            </div>
+            <div class="tile-body">
+                <table class="table table-hover table-bordered" name="sampleTable">
+                    <thead>
+                        <tr>
+
+                            <th>@Localizer["NewValueAR"]</th>
+                            <th>@Localizer["NewValueEN"]</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.NameAR</td>
+                                <td>@item.NameEN</td>
+
+                                <td><a class="btn btn-danger" asp-controller="News" asp-action="DeleteCategoryByID" asp-route-categoryID="@item.ID"> <i class="fa fa-lg fa-trash"></i>Delete</a></td>
+
+                               
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

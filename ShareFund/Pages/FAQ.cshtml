@@ -1,0 +1,77 @@
+﻿@page
+@model ShareFund.Pages.FAQModel
+@using Microsoft.AspNetCore.Mvc.Localization;
+@using System.Globalization;
+@inject IHtmlLocalizer<SharedResource> Localizer
+@{
+}
+@*<section class="about__area st-3">
+    <div class="container">
+        <div class="row wow fadeInUp">
+            <div class="col-xl-6 col-lg-6">
+                <div class="about__img mb-30">
+                    <div class="about__img-inner p-relative st-3">
+                        <div class="about__img-3-main p-relative">
+                            <img src="/img/about/about3-img.jpg" alt="">
+                            <div class="about3-main-shape">
+                                <img src="/img/shape/about3-main-shape.png" alt="">
+                            </div>
+                        </div>
+                        <div class="about3-p-element">
+                            <div class="about-3-s1">
+                                <img src="/img/shape/about-3-s1.png" alt="">
+                            </div>
+                            <div class="about-3-s2">
+                                <img src="/img/shape/about-3-s2.png" alt="">
+                            </div>
+                            <!--<div class="about-3-s3">
+                            <img src="/img/shape/about-3-s3.png" alt="">
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-6 col-lg-6" style="direction:ltr">
+                <div class="about__content mb-30">
+                    <div class="section-title mb-30">
+                        <div class="border-right st-3">
+                            <p>@Localizer["AboutShareFund"]</p>
+                        </div>
+                        <h2> @Model.PriefAbout </h2>
+                    </div>
+                    <br /><br />
+
+                    <div class="about__btn">
+                        <a href="about.html" class="grb-btn st-3">@Localizer["ReadMore"] </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+*@
+<section class="page-title-area" data-background="/img/bg/coming-bg.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-title-content text-center">
+                    <div class="page-title-heading">
+                        <h1>@Model.PriefAbout</h1>
+                    </div>
+                    @*<nav class="grb-breadcrumb">
+                    <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">@Localizer["AboutCompany"]</li>
+                    <li class="breadcrumb-item"><a href="index.html">@Localizer["HomePage"]</a></li>
+
+                    </ol>
+                    </nav>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="p-5">
+    @Html.Raw(Model.Questions)
+
+</div>

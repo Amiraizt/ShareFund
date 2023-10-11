@@ -1,0 +1,747 @@
+﻿@using Microsoft.AspNetCore.Localization;
+@using Microsoft.AspNetCore.Mvc.Localization;
+@using Microsoft.Extensions.Options;
+@using System.Globalization;
+@inject IHtmlLocalizer<SharedResource> Localizer
+@inject IOptions<RequestLocalizationOptions> LocOptions
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var cultureItems = LocOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+        .ToList();
+    var supportRtl = CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
+}
+<!DOCTYPE html>
+<html @(supportRtl ? Html.Raw("lang=\"ar\" dir=\"rtl\"") : Html.Raw("lang=\"en\" dir=\"ltr\""))>
+<head>
+    <meta name="description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
+    <!-- Twitter meta-->
+    <!-- Open Graph Meta-->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Vali Admin">
+    <meta property="og:title" content="Vali - Free Bootstrap 4 admin theme">
+    <meta property="og:url" content="http://pratikborsadiya.in/blog/vali-admin">
+    <meta property="og:image" content="http://pratikborsadiya.in/blog/vali-admin/hero-social.png">
+    <meta property="og:description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
+    <title>Share fund Admin </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Main CSS-->
+    <link href="~/AdminAssets/css/jquery.datatables.min.css" rel="stylesheet" />
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    @if (supportRtl){
+        <link href="~/AdminAssets/main.css" rel="stylesheet" />
+
+    }
+    else
+    {
+        <link href="~/AdminAssets/main.en.css" rel="stylesheet" />
+
+    }
+</head>
+<body>
+    <!-- Navbar-->
+    <header class="app-header">
+        <a class="app-header__logo" href="index.html">Share fund</a>
+        <!-- Sidebar toggle button-->
+@*    <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
+*@   
+
+        <!-- Navbar Right Menu-->
+        <ul class="app-nav">
+            <li class="app-search">
+                <select style="height: 30px;margin-top: 14px;width: 180px;margin-left: 35px;" onchange="SetCulture(this.value)" asp-for="@requestCulture.RequestCulture.UICulture.Name" asp-items="cultureItems">
+                </select>
+           
+            <!-- User Menu-->
+            <li class="dropdown">
+                <a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i class="fa fa-user fa-lg"></i></a>
+                <ul class="dropdown-menu settings-menu dropdown-menu-right">
+                   
+                    <li><a class="dropdown-item" href="/identity/account/logout"><i class="fa fa-sign-out fa-lg"></i> Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+
+    </header>
+    <!-- Sidebar menu-->
+    <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+    <aside class="app-sidebar">
+
+        <ul class="app-menu">
+            @*        <li><a class="app-menu__item active" href="index.html"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
+            *@
+            @*<li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">UI Elements</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+            <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> Bootstrap Elements</a></li>
+            <li><a class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i> Font Icons</a></li>
+            <li><a class="treeview-item" href="ui-cards.html"><i class="icon fa fa-circle-o"></i> Cards</a></li>
+            <li><a class="treeview-item" href="widgets.html"><i class="icon fa fa-circle-o"></i> Widgets</a></li>
+            </ul>
+            </li>
+            *@
+            <li><a class="app-menu__item" asp-action="Index" asp-controller="HomePage"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">@Localizer["HomePage"] </span></a></li>
+            <li><a class="app-menu__item" asp-action="AboutCompany" asp-controller="HomePage"><i class="app-menu__icon fa fa-pied-piper-pp"></i><span class="app-menu__label">@Localizer["AboutCompany"]</span></a></li>
+            <li><a class="app-menu__item" asp-action="FAQAndTeam" asp-controller="HomePage"><i class="app-menu__icon fa fa-puzzle-piece"></i><span class="app-menu__label">@Localizer["FAQ&Team"]</span></a></li>
+            <li><a class="app-menu__item" href="/News/index"><i class="app-menu__icon fa fa-puzzle-piece"></i><span class="app-menu__label">@Localizer["News"] </span></a></li>
+            <li><a class="app-menu__item" asp-action="Categories" asp-controller="News"><i class="app-menu__icon fa fa-puzzle-piece"></i><span class="app-menu__label">@Localizer["NewsCategories"]</span></a></li>
+            <li><a class="app-menu__item" asp-action="SiteMessagesIndex" asp-controller="HomePage"><i class="app-menu__icon fa fa-puzzle-piece"></i><span class="app-menu__label">@Localizer["SiteMessages"]</span></a></li>
+            <li><a class="app-menu__item" asp-action="ContactNumbersIndex" asp-controller="HomePage"><i class="app-menu__icon fa fa-puzzle-piece"></i><span class="app-menu__label">@Localizer["ContactNumbers"]</span></a></li>
+            @*<li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">Forms</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+            <li><a class="treeview-item" href="form-components.html"><i class="icon fa fa-circle-o"></i> Form Components</a></li>
+            <li><a class="treeview-item" href="form-custom.html"><i class="icon fa fa-circle-o"></i> Custom Components</a></li>
+            <li><a class="treeview-item" href="form-samples.html"><i class="icon fa fa-circle-o"></i> Form Samples</a></li>
+            <li><a class="treeview-item" href="form-notifications.html"><i class="icon fa fa-circle-o"></i> Form Notifications</a></li>
+            </ul>
+            </li>
+            <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-th-list"></i><span class="app-menu__label">Tables</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+            <li><a class="treeview-item" href="table-basic.html"><i class="icon fa fa-circle-o"></i> Basic Tables</a></li>
+            <li><a class="treeview-item" href="table-data-table.html"><i class="icon fa fa-circle-o"></i> Data Tables</a></li>
+            </ul>
+            </li>
+            <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-file-text"></i><span class="app-menu__label">Pages</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+            <li><a class="treeview-item" href="blank-page.html"><i class="icon fa fa-circle-o"></i> Blank Page</a></li>
+            <li><a class="treeview-item" href="page-login.html"><i class="icon fa fa-circle-o"></i> Login Page</a></li>
+            <li><a class="treeview-item" href="page-lockscreen.html"><i class="icon fa fa-circle-o"></i> Lockscreen Page</a></li>
+            <li><a class="treeview-item" href="page-user.html"><i class="icon fa fa-circle-o"></i> User Page</a></li>
+            <li><a class="treeview-item" href="page-invoice.html"><i class="icon fa fa-circle-o"></i> Invoice Page</a></li>
+            <li><a class="treeview-item" href="page-calendar.html"><i class="icon fa fa-circle-o"></i> Calendar Page</a></li>
+            <li><a class="treeview-item" href="page-mailbox.html"><i class="icon fa fa-circle-o"></i> Mailbox</a></li>
+            <li><a class="treeview-item" href="page-error.html"><i class="icon fa fa-circle-o"></i> Error Page</a></li>
+            </ul>
+            </li>*@
+        </ul>
+    </aside>
+    <main class="app-content">
+        <script src="~/AdminAssets/jquery-3.2.1.min.js"></script>
+        <partial name="_NotificationPanel"></partial>
+        @RenderBody()
+        <div class="modal fade" id="textModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="indicator"></div>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            @Localizer["UpdateSetting"]
+                        </h5>
+
+
+                    </div>
+                    <div class="modal-body">
+                        <form enctype="multipart/form-data" id="uploadContract" asp-action="SaveTextSetting" method="post">
+                            <div class="input-group ">
+                                <input name="Name" id="Name" hidden />
+                                <input name="url" id="url" hidden value="" />
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["NewValueAR"]</label>
+                                    <input type="text" name="ValueAR" id="ValueAR" class="form-control" />
+                                </div>
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["NewValueEN"]</label>
+                                    <input type="text" name="ValueEN" id="ValueEN" class="form-control" />
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="submit" class="btn btn-primary btn-sm">@Localizer["Save"]</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row col-md-12 ml-auto mr-auto preview"></div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="textAreaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="indicator"></div>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            @Localizer["UpdateSetting"]
+                        </h5>
+
+
+                    </div>
+                    <div class="modal-body">
+                        <form enctype="multipart/form-data" id="uploadContract" asp-action="SaveSingleTextSetting" method="post">
+                            <div class="input-group ">
+                                <input name="Name" id="Name" hidden />
+                                <input name="url" id="url" hidden value="" />
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["NewValueAR"]</label>
+                                    <textarea name="ValueAR" id="ValueAR" class="form-control"></textarea>
+                                </div>
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["NewValueEN"]</label>
+                                    <textarea name="ValueEN" id="ValueEN" class="form-control"></textarea>
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="submit" class="btn btn-primary btn-sm">@Localizer["Save"]</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row col-md-12 ml-auto mr-auto preview"></div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="fileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="indicator"></div>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            @Localizer["UpdateSetting"]
+                        </h5>
+
+
+                    </div>
+                    <div class="modal-body">
+                        <form enctype="multipart/form-data" asp-action="SaveTextSetting" method="post">
+                            <div class="input-group">
+                                <input name="Name" id="Name" hidden />
+                                <div class="form-group">
+                                    <label class="control-label">@Localizer["Value"]</label>
+                                    <input type="file" name="Value" id="Value" class="form-control" />
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="submit" class="btn btn-primary btn-sm">@Localizer["Save"]</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row col-md-12 ml-auto mr-auto preview"></div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="ClientModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="indicator"></div>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            @Localizer["UpdateSetting"]
+                        </h5>
+
+
+                    </div>
+                    <div class="modal-body">
+                        <form enctype="multipart/form-data" asp-action="AddClient" method="post">
+                            <div class="input-group">
+                                <input name="Name" id="Name" hidden />
+                                <div class="form-group">
+                                    <label class="control-label">@Localizer["NewClient"] </label>
+                                    <input type="file" name="File" id="File" class="form-control" />
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="submit" class="btn btn-primary btn-sm">@Localizer["Save"]</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row col-md-12 ml-auto mr-auto preview"></div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="MainSliderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="indicator"></div>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            @Localizer["MainPageSlider"]
+                        </h5>
+
+
+                    </div>
+                    <div class="modal-body">
+                        <form enctype="multipart/form-data" asp-action="AddSliderImage" method="post">
+                            <div class="input-group">
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["TitleAr"]</label>
+                                    <input type="text" name="TitleAR" id="TitleAR" class="form-control" />
+                                </div>
+                                    <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["TitleEn"]</label>
+                                    <input type="text" name="TitleEN" id="TitleEN" class="form-control" />
+                                </div>
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["Image"]</label>
+                                    <input type="file" name="Image" id="Image" class="form-control" />
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="submit" class="btn btn-primary btn-sm">@Localizer["Save"]</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row col-md-12 ml-auto mr-auto preview"></div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="OurServicesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="indicator"></div>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                           @Localizer["OurServices"]
+                        </h5>
+
+
+                    </div>
+                    <div class="modal-body">
+                        <form enctype="multipart/form-data" asp-action="AddService" method="post">
+                            <div class="input-group">
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["TitleAr"]</label>
+                                    <input type="text" name="TitleAr" id="TitleAr" class="form-control" />
+                                </div>
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["TitleEn"]</label>
+                                    <input type="text" name="TitleEn" id="TitleEn" class="form-control" />
+                                </div>
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["BodyAr"]</label>
+                                    <input type="text" name="BodyAr" id="BodyAr" class="form-control" />
+                                </div>
+                                    <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["BodyEn"]</label>
+                                    <input type="text" name="BodyEn" id="BodyEn" class="form-control" />
+                                </div>
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["Image"]</label>
+                                    <input type="file" name="Icon" id="Image" class="form-control" />
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="submit" class="btn btn-primary btn-sm">@Localizer["Save"]</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row col-md-12 ml-auto mr-auto preview"></div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="AdvantagesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="indicator"></div>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            @Localizer["CompetitiveAdvantage"]
+                        </h5>
+
+
+                    </div>
+                    <div class="modal-body">
+                        <form enctype="multipart/form-data" asp-action="AddAdvantage" method="post">
+                            <div class="input-group">
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["NewValueAR"]</label>
+                                    <input type="text" name="TitleAR" id="TitleAR" class="form-control" />
+                                </div>
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["NewValueEN"]</label>
+                                    <input type="text" name="TitleEN" id="TitleEN" class="form-control" />
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["Image"]</label>
+                                    <input type="file" name="Icon" id="Image" class="form-control" />
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="submit" class="btn btn-primary btn-sm">@Localizer["Save"]</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row col-md-12 ml-auto mr-auto preview"></div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="CountersModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="indicator"></div>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            @Localizer["Counter"]
+                        </h5>
+
+
+                    </div>
+                    <div class="modal-body">
+                        <form enctype="multipart/form-data" asp-action="AddCounter" method="post">
+                            <div class="input-group">
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["NewValueAR"]</label>
+                                    <input type="text" name="LabelAR" id="LabelAR" class="form-control" />
+                                </div>
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["NewValueEN"]</label>
+                                    <input type="text" name="LabelEN" id="LabelEN" class="form-control" />
+                                </div>
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["Count"]</label>
+                                    <input type="text" name="Count" id="Count" class="form-control" />
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["Image"]</label>
+                                    <input type="file" name="Icon" id="Image" class="form-control" />
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="submit" class="btn btn-primary btn-sm">@Localizer["Save"]</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row col-md-12 ml-auto mr-auto preview"></div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="CountersModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="indicator"></div>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                           @Localizer["CompetitiveAdvantage"]
+                        </h5>
+
+
+                    </div>
+                    <div class="modal-body">
+                        <form enctype="multipart/form-data" asp-action="AddCounter" method="post">
+                            <div class="input-group">
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["Label"]</label>
+                                    <input type="text" name="Label" id="Label" class="form-control" />
+                                </div>
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["Count"]</label>
+                                    <input type="text" name="Count" id="Count" class="form-control" />
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["Image"]</label>
+                                    <input type="file" name="Icon" id="Icon" class="form-control" />
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="submit" class="btn btn-primary btn-sm">@Localizer["Save"]</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row col-md-12 ml-auto mr-auto preview"></div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="AddMemberModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="indicator"></div>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            @Localizer["TeamWork"]
+                        </h5>
+
+
+                    </div>
+                    <div class="modal-body">
+                        <form enctype="multipart/form-data" asp-action="AddTeamMember" method="post">
+                            <div class="input-group">
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["NameAR"]</label>
+                                    <input type="text" name="NameAR" id="NameAR" class="form-control" />
+                                </div>
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["NameEN"]</label>
+                                    <input type="text" name="NameEN" id="NameEN" class="form-control" />
+                                </div>
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["JobTitleAR"]</label>
+                                    <input type="text" name="JobTitleAR" id="JobTitleAR" class="form-control" />
+                                </div>
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["JobTitleEN"]</label>
+                                    <input type="text" name="JobTitleEN" id="JobTitleEN" class="form-control" />
+                                </div>
+                                <div class="form-group col-12">
+                                    <label class="control-label">Facebook</label>
+                                    <input type="text" name="FacebookLink" id="FacebookLink" class="form-control" />
+                                </div>
+                                <div class="form-group col-12">
+                                    <label class="control-label">Twitter</label>
+                                    <input type="text" name="TwitterLink" id="TwitterLink" class="form-control" />
+                                </div>
+                                <div class="form-group col-12">
+                                    <label class="control-label">Instagram</label>
+                                    <input type="text" name="InstagramLink" id="InstagramLink" class="form-control" />
+                                </div>
+                                <div class="form-group col-12">
+                                    <label class="control-label">Skype</label>
+                                    <input type="text" name="SkypeLink" id="SkypeLink" class="form-control" />
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["Image"]<small>(270*352)</small></label>
+                                    <input type="file" name="Image" id="Image" class="form-control" />
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="submit" class="btn btn-primary btn-sm">@Localizer["Save"]</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row col-md-12 ml-auto mr-auto preview"></div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="NewsCategoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="indicator"></div>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            @Localizer["NewsCategories"]
+                        </h5>
+
+
+                    </div>
+                    <div class="modal-body">
+                        <form enctype="multipart/form-data" asp-action="CreateCategory" method="post">
+                            <div class="input-group">
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["NewValueAR"]</label>
+                                    <input type="text" name="NameAR"  class="form-control" />
+                                </div>
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["NewValueEN"]</label>
+                                    <input type="text" name="NameEN" class="form-control" />
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="submit" class="btn btn-primary btn-sm">@Localizer["Save"]</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row col-md-12 ml-auto mr-auto preview"></div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="MediaLinkModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="indicator"></div>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            @Localizer["UpdateSetting"]
+                        </h5>
+
+
+                    </div>
+                    <div class="modal-body">
+                        <form enctype="multipart/form-data"  asp-action="SaveSetting" method="post">
+                            <div class="input-group ">
+                                <input name="SettingName" id="Name" hidden value="" />
+                                <div class="form-group col-12">
+                                    <label class="control-label">@Localizer["Value"]</label>
+                                    <input type="text" name="Value" id="Value" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="submit" class="btn btn-primary btn-sm">@Localizer["Save"]</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row col-md-12 ml-auto mr-auto preview"></div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+
+                $('[name="sampleTable"]').DataTable(
+                    {
+                        /* Disable initial sort */
+                        "aaSorting": [],
+                        columnDefs: [
+                            {
+                                targets: '_all',
+                                className: 'dt-center row-border hover'
+                            }
+                        ]
+                    });
+                //$(".loader").hide();
+                $(".loader").fadeOut("slow");
+            });
+            function ShowModel(name, currentValueAR, currentValueEN, url) {
+                $("#textModal").modal("show");
+                $('[name="Name"]').val(name);
+                $('#ValueAR').val(currentValueAR)
+                $('#ValueEN').val(currentValueEN)
+                if (url != null) {
+                    $('[name="url"]').val(url)
+                }
+            };
+            function ShowAreaModel(name, currentValueAR, currentValueEN, url) {
+                $("#textAreaModal").modal("show");
+                $('[name="Name"]').val(name);
+                $('[name="ValueAR"]').val(currentValueAR)
+                $('[name="ValueEN"]').val(currentValueEN)
+                if (url != null) {
+                    $('[name="url"]').val(url)
+                }
+            };
+            function ShowFileModel(Id, currentValue) {
+                $("#fileModal").modal("show");
+                $('[name="Name"]').val(Id);
+                //$('#Value').val(currentValue)
+            };
+            function ShowSliderImageModel() {
+                $("#MainSliderModal").modal("show");
+                //$('[name="Name"]').val(Id);
+                //$('#Value').val(currentValue)
+            };
+            function ShowOurServicesModel() {
+                $("#OurServicesModal").modal("show");
+                //$('[name="Name"]').val(Id);
+                //$('#Value').val(currentValue)
+            };
+            function ShowAdvantagesModal() {
+                $("#AdvantagesModal").modal("show");
+                //$('[name="Name"]').val(Id);
+                //$('#Value').val(currentValue)
+            };
+            function ShowCountersModal() {
+                $("#CountersModal").modal("show");
+                //$('[name="Name"]').val(Id);
+                //$('#Value').val(currentValue)
+            };
+            function ShowClientModal() {
+                $("#ClientModal").modal("show");
+                //$('[name="Name"]').val(Id);
+                //$('#Value').val(currentValue)
+            };
+            function ShowAddMemberModal() {
+                $("#AddMemberModal").modal("show");
+                //$('[name="Name"]').val(Id);
+                //$('#Value').val(currentValue)
+            };
+            function ShowNewsCategoryModal() {
+                $("#NewsCategoryModal").modal("show");
+                //$('[name="Name"]').val(Id);
+                //$('#Value').val(currentValue)
+            };
+
+            function ShowSettingModal(settingName,Value) {
+                $("#MediaLinkModal").modal("show");
+                $('[name="SettingName"]').val(settingName);
+                $('#MediaLinkModal [name="Value"]').val(Value);
+            };
+
+        </script>
+            <script>
+
+        function SetCulture(selectedValue) {
+            var url = window.location.href.split('?')[0];
+            var culture = "?culture=" + selectedValue + "&ui-culture=" + selectedValue;
+            window.location.href = url + culture;
+            //$.ajax({
+
+            //    url: '/Customer/ChangeLanguage?culture=' + selectedValue,
+            //    type: 'GET',
+            //    dataType: 'json',
+            //    success: function (data) {
+
+            //    }
+            //});
+
+        }
+    </script>
+    </main>
+    <script src="~/AdminAssets/popper.min.js"></script>
+    <script src="~/AdminAssets/bootstrap.min.js"></script>
+    <script src="~/AdminAssets/main.js"></script>
+    <script src="~/AdminAssets/plugins/pace.min.js"></script>
+    <script src="~/AdminAssets/js/jquery.datatables.js"></script>
+     <script>
+
+       function SetCulture(selectedValue) {
+            var currenturl = window.location.href.split('?')[0];
+            var culture = "?culture=" + selectedValue + "&ui-culture=" + selectedValue;
+            $.ajax({
+
+                url: '/HomePage/SetCulture?culture=' + selectedValue + '&returnUrl=' + window.location.pathname,
+                type: 'POST',
+                dataType: 'json',
+                success: function (data) {
+                    window.location.href = currenturl + culture;
+
+                },
+                error:{function(XHR){
+                    alert(XHR)
+                }}
+
+            });
+
+
+        }
+    </script>
+</body>
+</html>

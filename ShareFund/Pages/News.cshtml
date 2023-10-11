@@ -1,0 +1,524 @@
+﻿@page
+@model ShareFund.Pages.NewsModel
+
+@using Microsoft.AspNetCore.Mvc.Localization;
+@using System.Globalization;
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+@{
+    var supportRtl = CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
+
+}
+ <!-- page title area start  -->
+        <section class="page-title-area" data-background="assets/img/bg/page-title-bg.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="page-title-content text-center">
+                            <div class="page-title-heading">
+                                <h1>@Localizer["News"]</h1>
+                            </div>
+                            <nav class="grb-breadcrumb">
+                               
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- page title area end -->
+        <!-- blog area start  -->
+@if (supportRtl)
+{
+    <div class="blog-main-area pt-150" style="direction:rtl">
+        <div class="container">
+            <div class="row wow fadeInUp">
+                <div class="col-lg-8">
+                    <div class="blog-main">
+                        @foreach (var item in Model.News)
+                        {
+                            <div class="blog-main-single mb-60">
+                                <div class="bms-img mb-30">
+                                    <a href="blog-details.html"><img src="/img/@item.Image" alt=""></a>
+                                </div>
+                                <div class="bms-content">
+                                    <div class="fix mb-30">
+                                        <div class="blog-date bms-date" style="float:right !important;">
+                                            <i class="fal fa-calendar-alt"></i>
+                                            <span>@item.DateTime.Day</span>
+                                            <p>@item.DateTime.ToString("MMM yyyy")</p>
+                                        </div>
+                                        <div class="bms-title" style="float:right !important;">
+                                            <ul class="project-like-view bms-lv">
+                                                <li>
+                                                    <a href="blog-details.html">
+                                                        <i class="fas fa-folder-open"></i>@item.Category
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+                                            <h4><a asp-asp-page="News" asp-route-NewsID="@item.ID">@item.Title</a></h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <p class="text-wrap">@item.Summary</p>
+                                    </div>
+
+                                    <div class="bms-btn mt-45">
+                                        <a asp-asp-page="News" asp-route-newsID="@item.ID" class="grb-border-btn st-1">@Localizer["ReadMore"]</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @* <div class="blog-main-single mb-60">
+                    <div class="bms-img mb-30">
+                    <a href="blog-details.html"><img src="/img/bms2.jpg" alt=""></a>
+                    </div>
+                    <div class="bms-content">
+                    <div class="fix mb-30">
+                    <div class="blog-date bms-date">
+                    <i class="fal fa-calendar-alt"></i>
+                    <span>22</span>
+                    <p>Jan 2020</p>
+                    </div>
+                    <div class="bms-title">
+                    <ul class="project-like-view bms-lv">
+                    <li><a href="blog-details.html"><i
+                    class="fas fa-folder-open"></i>Business</a></li>
+                    <li><a href="blog-details.html"><i class="fas fa-comments-alt"></i>45
+                    Comments</a></li>
+                    <li><a href="blog-details.html"><i class="fas fa-eye"></i>546 Views</a>
+                    </li>
+                    </ul>
+                    <h4><a href="blog-details.html">How a developer and designer duo at Deutsche
+                    Bank keep remote</a></h4>
+                    </div>
+                    </div>
+                    <p>There are many variations of passages of Lorem Ipsum available, but the majority
+                    have suffered alteration in some form,
+                    by injected humour. If you are going to use a passage of Lorem Ipsum, you need
+                    to be sure. Lorem ipsum dolor sit amet,
+                    consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+                    <div class="bms-btn mt-45">
+                    <a href="blog-details.html" class="grb-border-btn st-1">Read More</a>
+                    </div>
+                    </div>
+                    </div>
+                    <div class="blog-main-single mb-60">
+                    <div class="bms-img mb-30">
+                    <a href="blog-details.html"><img src="/img/bms3.jpg" alt=""></a>
+                    </div>
+                    <div class="bms-content">
+                    <div class="fix mb-30">
+                    <div class="blog-date bms-date">
+                    <i class="fal fa-calendar-alt"></i>
+                    <span>22</span>
+                    <p>Jan 2020</p>
+                    </div>
+                    <div class="bms-title">
+                    <ul class="project-like-view bms-lv">
+                    <li><a href="blog-details.html"><i
+                    class="fas fa-folder-open"></i>Business</a></li>
+                    <li><a href="blog-details.html"><i class="fas fa-comments-alt"></i>45
+                    Comments</a></li>
+                    <li><a href="blog-details.html"><i class="fas fa-eye"></i>546 Views</a>
+                    </li>
+                    </ul>
+                    <h4><a href="blog-details.html">The underrated design book that transformed
+                    the way I work</a></h4>
+                    </div>
+                    </div>
+                    <p>There are many variations of passages of Lorem Ipsum available, but the majority
+                    have suffered alteration in some form,
+                    by injected humour. If you are going to use a passage of Lorem Ipsum, you need
+                    to be sure. Lorem ipsum dolor sit amet,
+                    consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+                    <div class="bms-btn mt-45">
+                    <a href="blog-details.html" class="grb-border-btn st-1">Read More</a>
+                    </div>
+                    </div>
+                    </div>
+                    <div class="blog-main-single mb-60">
+                    <div class="bms-img mb-30">
+                    <a href="blog-details.html"><img src="/img/bms4.jpg" alt=""></a>
+                    </div>
+                    <div class="bms-content">
+                    <div class="fix mb-30">
+                    <div class="blog-date bms-date">
+                    <i class="fal fa-calendar-alt"></i>
+                    <span>22</span>
+                    <p>Jan 2020</p>
+                    </div>
+                    <div class="bms-title">
+                    <ul class="project-like-view bms-lv">
+                    <li><a href="blog-details.html"><i
+                    class="fas fa-folder-open"></i>Business</a></li>
+                    <li><a href="blog-details.html"><i class="fas fa-comments-alt"></i>45
+                    Comments</a></li>
+                    <li><a href="blog-details.html"><i class="fas fa-eye"></i>546 Views</a>
+                    </li>
+                    </ul>
+                    <h4><a href="blog-details.html">6 ways you can make your design more
+                    inclusive and equitable</a></h4>
+                    </div>
+                    </div>
+                    <p>There are many variations of passages of Lorem Ipsum available, but the majority
+                    have suffered alteration in some form,
+                    by injected humour. If you are going to use a passage of Lorem Ipsum, you need
+                    to be sure. Lorem ipsum dolor sit amet,
+                    consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+                    <div class="bms-btn mt-45">
+                    <a href="blog-details.html" class="grb-border-btn st-1">Read More</a>
+                    </div>
+                    </div>
+                    </div>
+                    <div class="blog-main-single mb-60">
+                    <div class="bms-img mb-30">
+                    <a href="blog-details.html"><img src="/img/bms5.jpg" alt=""></a>
+                    </div>
+                    <div class="bms-content">
+                    <div class="fix mb-30">
+                    <div class="blog-date bms-date">
+                    <i class="fal fa-calendar-alt"></i>
+                    <span>22</span>
+                    <p>Jan 2020</p>
+                    </div>
+                    <div class="bms-title">
+                    <ul class="project-like-view bms-lv">
+                    <li><a href="blog-details.html"><i
+                    class="fas fa-folder-open"></i>Business</a></li>
+                    <li><a href="blog-details.html"><i class="fas fa-comments-alt"></i>45
+                    Comments</a></li>
+                    <li><a href="blog-details.html"><i class="fas fa-eye"></i>546 Views</a>
+                    </li>
+                    </ul>
+                    <h4><a href="blog-details.html">Apple reimagines the iPhone experience with
+                    iOS 14</a></h4>
+                    </div>
+                    </div>
+                    <p>There are many variations of passages of Lorem Ipsum available, but the majority
+                    have suffered alteration in some form,
+                    by injected humour. If you are going to use a passage of Lorem Ipsum, you need
+                    to be sure. Lorem ipsum dolor sit amet,
+                    consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+                    <div class="bms-btn mt-45">
+                    <a href="blog-details.html" class="grb-border-btn st-1">Read More</a>
+                    </div>
+                    </div>
+                    </div>*@
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="blog-sidebar">
+
+                        <div class="bs-widget mb-30">
+                            <div class="bs-widget-title mb-40">
+                                <h5>@Localizer["Categories"]</h5>
+                            </div>
+                            <ul class="bs-category-list">
+
+                                @foreach (var item in Model.Categories)
+                                {
+                                    <li>
+                                        <a href="/news?categoryID=@item.ID">
+                                            <p>@item.Name</p><span>(@item.Count)</span>
+                                        </a>
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+else
+{
+    <div class="blog-main-area pt-150" style="direction:ltr;">
+        <div class="container">
+            <div class="row wow fadeInUp">
+                <div class="col-lg-8">
+                    <div class="blog-main">
+                        @foreach (var item in Model.News)
+                        {
+                            <div class="blog-main-single mb-60">
+                                <div class="bms-img mb-30">
+                                    <a href="blog-details.html"><img src="/img/@item.Image" alt=""></a>
+                                </div>
+                                <div class="bms-content">
+                                    <div class="fix mb-30">
+                                        <div class="blog-date bms-date" style="float:left !important;">
+                                            <i class="fal fa-calendar-alt"></i>
+                                            <span>@item.DateTime.Day</span>
+                                            <p>@item.DateTime.ToString("MMM yyyy")</p>
+                                        </div>
+                                        <div class="bms-title" style="float:left !important;">
+                                            <ul class="project-like-view bms-lv">
+                                                <li>
+                                                    <a href="blog-details.html">
+                                                        <i class="fas fa-folder-open"></i>@item.Category
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+                                            <h4><a asp-asp-page="News" asp-route-NewsID="@item.ID">@item.Title</a></h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <p class="text-wrap">@item.Summary</p>
+                                    </div>
+
+                                    <div class="bms-btn mt-45">
+                                        <a asp-asp-page="News" asp-route-newsID="@item.ID" class="grb-border-btn st-1">@Localizer["ReadMore"]</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @* <div class="blog-main-single mb-60">
+                    <div class="bms-img mb-30">
+                    <a href="blog-details.html"><img src="/img/bms2.jpg" alt=""></a>
+                    </div>
+                    <div class="bms-content">
+                    <div class="fix mb-30">
+                    <div class="blog-date bms-date">
+                    <i class="fal fa-calendar-alt"></i>
+                    <span>22</span>
+                    <p>Jan 2020</p>
+                    </div>
+                    <div class="bms-title">
+                    <ul class="project-like-view bms-lv">
+                    <li><a href="blog-details.html"><i
+                    class="fas fa-folder-open"></i>Business</a></li>
+                    <li><a href="blog-details.html"><i class="fas fa-comments-alt"></i>45
+                    Comments</a></li>
+                    <li><a href="blog-details.html"><i class="fas fa-eye"></i>546 Views</a>
+                    </li>
+                    </ul>
+                    <h4><a href="blog-details.html">How a developer and designer duo at Deutsche
+                    Bank keep remote</a></h4>
+                    </div>
+                    </div>
+                    <p>There are many variations of passages of Lorem Ipsum available, but the majority
+                    have suffered alteration in some form,
+                    by injected humour. If you are going to use a passage of Lorem Ipsum, you need
+                    to be sure. Lorem ipsum dolor sit amet,
+                    consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+                    <div class="bms-btn mt-45">
+                    <a href="blog-details.html" class="grb-border-btn st-1">Read More</a>
+                    </div>
+                    </div>
+                    </div>
+                    <div class="blog-main-single mb-60">
+                    <div class="bms-img mb-30">
+                    <a href="blog-details.html"><img src="/img/bms3.jpg" alt=""></a>
+                    </div>
+                    <div class="bms-content">
+                    <div class="fix mb-30">
+                    <div class="blog-date bms-date">
+                    <i class="fal fa-calendar-alt"></i>
+                    <span>22</span>
+                    <p>Jan 2020</p>
+                    </div>
+                    <div class="bms-title">
+                    <ul class="project-like-view bms-lv">
+                    <li><a href="blog-details.html"><i
+                    class="fas fa-folder-open"></i>Business</a></li>
+                    <li><a href="blog-details.html"><i class="fas fa-comments-alt"></i>45
+                    Comments</a></li>
+                    <li><a href="blog-details.html"><i class="fas fa-eye"></i>546 Views</a>
+                    </li>
+                    </ul>
+                    <h4><a href="blog-details.html">The underrated design book that transformed
+                    the way I work</a></h4>
+                    </div>
+                    </div>
+                    <p>There are many variations of passages of Lorem Ipsum available, but the majority
+                    have suffered alteration in some form,
+                    by injected humour. If you are going to use a passage of Lorem Ipsum, you need
+                    to be sure. Lorem ipsum dolor sit amet,
+                    consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+                    <div class="bms-btn mt-45">
+                    <a href="blog-details.html" class="grb-border-btn st-1">Read More</a>
+                    </div>
+                    </div>
+                    </div>
+                    <div class="blog-main-single mb-60">
+                    <div class="bms-img mb-30">
+                    <a href="blog-details.html"><img src="/img/bms4.jpg" alt=""></a>
+                    </div>
+                    <div class="bms-content">
+                    <div class="fix mb-30">
+                    <div class="blog-date bms-date">
+                    <i class="fal fa-calendar-alt"></i>
+                    <span>22</span>
+                    <p>Jan 2020</p>
+                    </div>
+                    <div class="bms-title">
+                    <ul class="project-like-view bms-lv">
+                    <li><a href="blog-details.html"><i
+                    class="fas fa-folder-open"></i>Business</a></li>
+                    <li><a href="blog-details.html"><i class="fas fa-comments-alt"></i>45
+                    Comments</a></li>
+                    <li><a href="blog-details.html"><i class="fas fa-eye"></i>546 Views</a>
+                    </li>
+                    </ul>
+                    <h4><a href="blog-details.html">6 ways you can make your design more
+                    inclusive and equitable</a></h4>
+                    </div>
+                    </div>
+                    <p>There are many variations of passages of Lorem Ipsum available, but the majority
+                    have suffered alteration in some form,
+                    by injected humour. If you are going to use a passage of Lorem Ipsum, you need
+                    to be sure. Lorem ipsum dolor sit amet,
+                    consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+                    <div class="bms-btn mt-45">
+                    <a href="blog-details.html" class="grb-border-btn st-1">Read More</a>
+                    </div>
+                    </div>
+                    </div>
+                    <div class="blog-main-single mb-60">
+                    <div class="bms-img mb-30">
+                    <a href="blog-details.html"><img src="/img/bms5.jpg" alt=""></a>
+                    </div>
+                    <div class="bms-content">
+                    <div class="fix mb-30">
+                    <div class="blog-date bms-date">
+                    <i class="fal fa-calendar-alt"></i>
+                    <span>22</span>
+                    <p>Jan 2020</p>
+                    </div>
+                    <div class="bms-title">
+                    <ul class="project-like-view bms-lv">
+                    <li><a href="blog-details.html"><i
+                    class="fas fa-folder-open"></i>Business</a></li>
+                    <li><a href="blog-details.html"><i class="fas fa-comments-alt"></i>45
+                    Comments</a></li>
+                    <li><a href="blog-details.html"><i class="fas fa-eye"></i>546 Views</a>
+                    </li>
+                    </ul>
+                    <h4><a href="blog-details.html">Apple reimagines the iPhone experience with
+                    iOS 14</a></h4>
+                    </div>
+                    </div>
+                    <p>There are many variations of passages of Lorem Ipsum available, but the majority
+                    have suffered alteration in some form,
+                    by injected humour. If you are going to use a passage of Lorem Ipsum, you need
+                    to be sure. Lorem ipsum dolor sit amet,
+                    consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+                    <div class="bms-btn mt-45">
+                    <a href="blog-details.html" class="grb-border-btn st-1">Read More</a>
+                    </div>
+                    </div>
+                    </div>*@
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="blog-sidebar">
+
+                        <div class="bs-widget mb-30">
+                            <div class="bs-widget-title mb-40">
+                                <h5>@Localizer["Categories"]</h5>
+                            </div>
+                            <ul class="bs-category-list">
+
+                                @foreach (var item in Model.Categories)
+                                {
+                                    <li>
+                                        <a href="/news?categoryID=@item.ID">
+                                            <p>@item.Name</p><span>(@item.Count)</span>
+                                        </a>
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+<!-- blog area end  -->
+        <!-- brand area start  -->
+        <div class="brand-area pt-40 pb-100">
+            <div class="container">
+                <div class="row wow fadeInUp">
+                    <div class="col-12">
+                        <div class="swiper-container brand-active">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="single-brand">
+                                        <a href="#"><img src="/img/brand1.png" alt=""></a>
+                                        <a href="#"><img src="/img/brand1-wc.png" alt=""></a>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="single-brand">
+                                        <a href="#"><img src="/img/brand2.png" alt=""></a>
+                                        <a href="#"><img src="/img/brand2-wc.png" alt=""></a>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="single-brand">
+                                        <a href="#"><img src="/img/brand3.png" alt=""></a>
+                                        <a href="#"><img src="/img/brand3-wc.png" alt=""></a>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="single-brand">
+                                        <a href="#"><img src="/img/brand4.png" alt=""></a>
+                                        <a href="#"><img src="/img/brand4-wc.png" alt=""></a>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="single-brand">
+                                        <a href="#"><img src="/img/brand5.png" alt=""></a>
+                                        <a href="#"><img src="/img/brand5-wc.png" alt=""></a>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="single-brand">
+                                        <a href="#"><img src="/img/brand1.png" alt=""></a>
+                                        <a href="#"><img src="/img/brand1-wc.png" alt=""></a>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="single-brand">
+                                        <a href="#"><img src="/img/brand2.png" alt=""></a>
+                                        <a href="#"><img src="/img/brand2-wc.png" alt=""></a>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="single-brand">
+                                        <a href="#"><img src="/img/brand3.png" alt=""></a>
+                                        <a href="#"><img src="/img/brand3-wc.png" alt=""></a>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="single-brand">
+                                        <a href="#"><img src="/img/brand4.png" alt=""></a>
+                                        <a href="#"><img src="/img/brand4-wc.png" alt=""></a>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="single-brand">
+                                        <a href="#"><img src="/img/brand5.png" alt=""></a>
+                                        <a href="#"><img src="/img/brand5-wc.png" alt=""></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- brand area end -->
+      

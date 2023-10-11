@@ -1,0 +1,141 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IHtmlLocalizer<SharedResource> Localizer
+@model FAQAndTeamModel
+@{
+    ViewData["Title"] = "FAQAndTeam";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="app-title">
+    <div>
+        <h1><i class="fa fa-file-text-o"></i> @Localizer["FAQAndTeam"] </h1>
+
+    </div>
+
+</div>
+
+<link href="~/richtexteditor/rte_theme_default.css" rel="stylesheet" />
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h4 class="text-center offset-md-4 col-md-4"> @Localizer["FAQ"] </h4>
+
+            <div class="tile-title-w-btn">
+                
+            </div>
+            <div class="tile-body">
+                <form>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label asp-for="FAQAR" class="control-label">@Localizer["FAQAR"] </label>
+                        <textarea asp-for="FAQAR" class="form-control"></textarea>
+                        <span asp-validation-for="FAQAR" class="text-danger"></span>
+                    </div>
+                     <div class="form-group">
+                        <label asp-for="FAQEN" class="control-label">@Localizer["FAQEN"] </label>
+                        <textarea asp-for="FAQEN" class="form-control"></textarea>
+                        <span asp-validation-for="FAQEN" class="text-danger"></span>
+                    </div>
+                    <center>
+                        <div class="form-group">
+                            <div class="m-loader mr-4" style="display:none" id="loader">
+                                <svg class="m-circular" viewBox="25 25 50 50">
+                                    <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="4" stroke-miterlimit="10"></circle>
+                                </svg>
+                            </div>
+                            <a id="saveBTN" class="btn btn-primary">@Localizer["Save"]</a>
+
+                        </div>
+                    </center>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h4 class="text-center offset-md-4 col-md-4"> @Localizer["Team"] </h4>
+
+            <div class="tile-title-w-btn">
+                @*                <h3 class="title"> <p><a asp-action="CreateRound" class="btn btn-primary icon-btn"><i class="fa fa-plus"></i>	</a></p></h3>
+                *@
+                <button type="button" class="btn btn-primary modalTrigger" onclick="ShowAddMemberModal()" data-toggle="modal" data-target="#exampleModal">
+                    <i class="fa fa-lg fa-plus"></i>      @Localizer["Add"]
+                </button>
+            </div>
+            <div class="tile-body">
+                <table class="table table-hover table-bordered" name="sampleTable">
+                    <thead>
+                        <tr>
+                            <th> @Localizer["Name"]</th>
+                            <th>@Localizer["JobTitle"] </th>
+                            <th>@Localizer["Links"] </th>
+                            <th>@Localizer["Image"]</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.Members)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.JobTitle</td>
+                                <td>
+                                    <span>Skype:</span><strong>@item.SkypeLink</strong><br />
+                                    <span>Instagram:</span><strong>@item.InstgramLink</strong>
+
+                                    <br />
+                                    <span>Twitter:</span><strong>@item.TwitterLink</strong><br />
+                                    <span>FaceBook:</span><strong>@item.FacebookLink</strong><br />
+                                </td>
+
+                                <td><img src="/img/@item.Image" style="height:100px;width:100px" /></td>
+                                <td><a asp-action="DeleteTeamMember" asp-route-memberID="@item.ID"> <i class="fa fa-lg fa-trash"></i> @Localizer["Delete"] </a></td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/rte.js"></script>
+<script src="~/js/all_plugins.js"></script>
+
+<script>
+    $(document).ready(function () {
+    @Html.Raw("var textAR=`"+Model.FAQAR+"`");
+    @Html.Raw("var textEN=`"+Model.FAQEN+"`");
+        const editorAR = new RichTextEditor("#FAQAR", { skin: "rounded-corner" });
+        const editorEN = new RichTextEditor("#FAQEN", { skin: "rounded-corner" });
+        editorAR.setHTMLCode(textAR);
+        editorEN.setHTMLCode(textEN);
+        $("#saveBTN").click(function () {
+            $.ajax({
+                url: '/HomePage/SaveFAQ',
+                method: 'Post',
+                data: { contentAR: editorAR.getHTMLCode(), contentEN: editorEN.getHTMLCode() },
+                complete: function () {
+                    $("#loader").toggle()
+                    $("#saveBTN").toggle()
+                },
+                beforeSend: function () {
+                    $("#loader").toggle()
+                    $("#saveBTN").toggle()
+                },
+                success: function () {
+                    sweetAlert('تم', 'تم التحديث', 'success')
+                },
+                error: function () {
+                    sweetAlert('خطأ', 'حدث خطأ', 'error')
+                }
+            })
+        })
+    })
+</script>

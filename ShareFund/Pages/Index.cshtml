@@ -1,0 +1,479 @@
+﻿@page
+@model IndexModel
+@using Microsoft.AspNetCore.Mvc.Localization;
+@using System.Globalization;
+@inject IHtmlLocalizer<SharedResource> Localizer
+@{
+    ViewData["Title"] = "Home page";
+    var supportRtl = CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
+
+}
+
+
+<!-- hero area start  -->
+  @if (supportRtl)
+    {
+<section class="hero-area p-relative st-3">
+    <div class="hero-line d-none d-xxl-block"></div>
+
+    <div class="grb__social hero-social d-none d-xxl-block">
+        <ul class="follow mb-25">
+            <li>F</li>
+            <li>O</li>
+            <li>L</li>
+            <li>L</li>
+            <li>O</li>
+            <li>W</li>
+        </ul>
+        <ul>
+                <li><a id="facebook" target="_blank" href="@Model.MainModel.FaceBookLink"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a id="twitter" target="_blank" href="@Model.MainModel.TwitterLink"><i class="fab fa-twitter"></i></a></li>
+        </ul>
+    </div>
+  
+
+        <div class="slider-active swiper-container">
+            <div class="swiper-wrapper">
+                @foreach (var item in Model.MainModel.Sliders)
+                {
+                    <div class="single-slider slider-height swiper-slide slider-overlay slider-overlay-3"
+                 data-swiper-autoplay="5000">
+                        <div class="slide-bg" data-background="/img/@item.Image"></div>
+                        <div class="p-element d-none d-lg-block">
+                            <img class="h3-s1" data-animation="fadeInDown" data-delay=".5s"
+                         src="/img/shape/h3-s1.png" alt="">
+                            <div class="h3-s2" data-animation="fadeInUp" data-delay="1.3s"></div>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <div class="hero-content">
+                                        <p data-animation="fadeInUp" data-delay=".3s"></p>
+                                        <h1 data-animation="fadeInUp" data-delay=".5s" style="direction:rtl">
+                                            @item.Title
+                                        </h1>
+                                        @*<div class="hero-content-btn">
+                                            <a href="contact.html" class="grb-border-btn fw-5" data-animation="fadeInUp" data-delay=".9s">
+                                                @Localizer["Start"]
+                                            </a>
+                                        </div>*@
+                                        <!--<a href="contact.html" class="grb-border-btn fw-5" data-animation="fadeInUp"
+                                        data-delay="1.1s">
+                                        Contact Us
+                                        </a>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+
+            </div>
+            <!-- If we need pagination -->
+            <!--<div class="swiper-pagination slider-swiper-paginations st-3"></div>-->
+        </div>
+        </section>
+        <!-- hero area end -->
+        <!-- about area start  -->
+        <section class="about__area st-3">
+            <div class="container">
+                <div class="row wow fadeInUp">
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="about__img mb-30">
+                            <div class="about__img-inner p-relative st-3">
+                                <div class="about__img-3-main p-relative">
+                                    <img src="/img/about/about3-img.jpg" alt="">
+                                    <div class="about3-main-shape">
+                                        <img src="/img/shape/about3-main-shape.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="about3-p-element">
+                                    <div class="about-3-s1">
+                                        <img src="/img/shape/about-3-s1.png" alt="">
+                                    </div>
+                                    <div class="about-3-s2">
+                                        <img src="/img/shape/about-3-s2.png" alt="">
+                                    </div>
+                                    <!--<div class="about-3-s3">
+                                    <img src="/img/shape/about-3-s3.png" alt="">
+                                    </div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6" style="direction:rtl">
+                        <div class="about__content mb-30">
+                            <div class="section-title mb-30">
+                                <div class="border-right st-3">
+                                    <p>@Localizer["AboutShareFund"]</p>
+                                </div>
+                                <h2> @Model.MainModel.PriefAbout </h2>
+                            </div>
+                        <br /><br />
+
+                        <div class="about__btn">
+            <a href="/aboutUs" class="grb-btn st-3">@Localizer["ReadMore"] </a>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </section>
+        <!-- about area end -->
+        <!-- service box area  -->
+
+        <section class="service-box-area service-box-area-main pt-150 pb-80 grey-bg" style="background-color: #199f9c;">
+
+            <div class="container">
+                <div class="row wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;direction: rtl;">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-box-single mb-40">
+                            <div class="service-box-content st-1">
+                                <div class="service-box-content-icon st-1" style="direction: ltr">
+                                    <i class="flaticon-idea"></i>
+                                </div>
+                                <div class="service-box-content-text">
+                                    <h4>@Localizer["Message"] </h4>
+                                    <p>@Model.MainModel.Message <br /><br />  </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-box-single mb-40">
+                            <div class="service-box-content st-1">
+                                <div class="service-box-content-icon st-1" style="direction: ltr;">
+                                    <i class="flaticon-consultation"></i>
+                                </div>
+                                <div class="service-box-content-text">
+                                    <h4>@Localizer["Vision"]  </h4>
+                                    <p>
+                                        @Model.MainModel.Vission
+                                        <br />
+                                        <br />
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-box-single mb-40">
+                            <div class="service-box-content st-1">
+                                <div class="service-box-content-icon st-1" style="direction: ltr;">
+                                    <i class="flaticon-healthcare"></i>
+                                </div>
+                                <div class="service-box-content-text">
+                                    <h4>@Localizer["InstitutionalValues"]  </h4>
+                                    <p>
+                                        @Model.MainModel.InstitutionalValues
+                                    </p>
+                                    <br /><br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </section>
+
+        <!-- choosing area start  -->
+        <section class="choosing__area st-3">
+            <div class="container">
+                <div class="row wow fadeInUp align-items-center">
+                    <div class="col-xl-6 col-lg-5">
+                        <div class="choosing__img mb-30 st-3" style="max-width: 75%;">
+                            <div class="choosing__img-inner p-relative st-3">
+                                <div class="choosing__img3-main p-relative">
+                                    <img src="/img/about/choosing3-img.jpg" alt="">
+                                    <div class="choosing__img-inner-shape">
+                                        <img src="/img/shape/choosing-m-shape.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="choosing3-p-element">
+                                    <div class="choosing-3-s1">
+                                        <img src="/img/shape/choosing-s1.png" alt="">
+                                    </div>
+                                    <div class="choosing-3-s2">
+                                        <img src="/img/shape/choosing-s2.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-7">
+                        <div class="choosing__content mb-30">
+
+                            <div class="section-title mb-30" style="direction: rtl;">
+                                <div class="border-right st-3">
+                                    <p>@Localizer["OurServices"]</p>
+                                </div>
+
+                            </div>
+                            <ul class="about-points st-1 border-0" style="direction: rtl;">
+                                @foreach (var item in Model.MainModel.OurServices)
+                                {
+                                    <li class="st-2">
+                                        <div class="points-heading" style="direction: ltr;">
+                                            <div class="p-icon st-3">
+                                                <img src="/img/@item.Icon" />
+                                            </div>
+                                            <h5>@item.Title</h5>
+                                        </div>
+                                        <div style="direction: rtl;">
+                                            <p>@item.Body</p>
+                                        </div>
+                                    </li>
+                                }
+
+                        </ul>
+                        <ul class="about-points st-2" style="direction: rtl;">
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+}
+else
+{
+
+    <section class="hero-area p-relative st-3">
+        <div class="hero-line d-none d-xxl-block"></div>
+
+        <div class="grb__social hero-social d-none d-xxl-block">
+            <ul class="follow mb-25">
+                <li>F</li>
+                <li>O</li>
+                <li>L</li>
+                <li>L</li>
+                <li>O</li>
+                <li>W</li>
+            </ul>
+            <ul>
+                <li><a id="facebook" href="@Model.MainModel.FaceBookLink" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a id="twitter" href="@Model.MainModel.TwitterLink" target="_blank"><i class="fab fa-twitter"></i></a></li>
+        
+            </ul>
+        </div>
+
+
+        <div class="slider-active swiper-container">
+            <div class="swiper-wrapper">
+                @foreach (var item in Model.MainModel.Sliders)
+                {
+                    <div class="single-slider slider-height swiper-slide slider-overlay slider-overlay-3"
+                 data-swiper-autoplay="5000">
+                        <div class="slide-bg" data-background="/img/@item.Image"></div>
+                        <div class="p-element d-none d-lg-block">
+                            <img class="h3-s1" data-animation="fadeInDown" data-delay=".5s"
+                         src="/img/shape/h3-s1.png" alt="">
+                            <div class="h3-s2" data-animation="fadeInUp" data-delay="1.3s"></div>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <div class="hero-content">
+                                        <p data-animation="fadeInUp" data-delay=".3s"></p>
+                                        <h1 data-animation="fadeInUp" data-delay=".5s" style="direction:rtl">
+                                            @item.Title
+                                        </h1>
+                                       @* <div class="hero-content-btn">
+                                            <a href="contact.html" class="grb-border-btn fw-5" data-animation="fadeInUp" data-delay=".9s">
+                                                @Localizer["Start"]
+                                            </a>
+                                        </div>*@
+                                        <!--<a href="contact.html" class="grb-border-btn fw-5" data-animation="fadeInUp"
+                                        data-delay="1.1s">
+                                        Contact Us
+                                        </a>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+
+            </div>
+            <!-- If we need pagination -->
+            <!--<div class="swiper-pagination slider-swiper-paginations st-3"></div>-->
+        </div>
+    </section>
+    <!-- hero area end -->
+    <!-- about area start  -->
+    <section class="about__area st-3">
+        <div class="container">
+            <div class="row wow fadeInUp">
+                <div class="col-xl-6 col-lg-6">
+                    <div class="about__img mb-30">
+                        <div class="about__img-inner p-relative st-3">
+                            <div class="about__img-3-main p-relative">
+                                <img src="/img/about/about3-img.jpg" alt="">
+                                <div class="about3-main-shape">
+                                    <img src="/img/shape/about3-main-shape.png" alt="">
+                                </div>
+                            </div>
+                            <div class="about3-p-element">
+                                <div class="about-3-s1">
+                                    <img src="/img/shape/about-3-s1.png" alt="">
+                                </div>
+                                <div class="about-3-s2">
+                                    <img src="/img/shape/about-3-s2.png" alt="">
+                                </div>
+                                <!--<div class="about-3-s3">
+                                <img src="/img/shape/about-3-s3.png" alt="">
+                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-6 col-lg-6" style="direction:ltr">
+                    <div class="about__content mb-30">
+                        <div class="section-title mb-30">
+                            <div class="border-right st-3">
+                                <p>@Localizer["AboutShareFund"]</p>
+                            </div>
+                            <h2> @Model.MainModel.PriefAbout </h2>
+                        </div>
+                        <br /><br />
+
+                        <div class="about__btn">
+                            <a href="/aboutUs" class="grb-btn st-3">@Localizer["ReadMore"] </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- about area end -->
+    <!-- service box area  -->
+
+    <section class="service-box-area service-box-area-main pt-150 pb-80 grey-bg" style="background-color: #199f9c;">
+
+        <div class="container">
+            <div class="row wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;direction: ltr;">
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-box-single mb-40">
+                        <div class="service-box-content st-1">
+                            <div class="service-box-content-icon st-1" style="direction: rtl">
+                                <i class="flaticon-idea"></i>
+                            </div>
+                            <div class="service-box-content-text">
+                                <h4>@Localizer["Message"] </h4>
+                                <p>@Model.MainModel.Message <br /><br />  </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-box-single mb-40">
+                        <div class="service-box-content st-1">
+                            <div class="service-box-content-icon st-1" style="direction: rtl;">
+                                <i class="flaticon-consultation"></i>
+                            </div>
+                            <div class="service-box-content-text">
+                                <h4>@Localizer["Vision"]  </h4>
+                                <p>
+                                    @Model.MainModel.Vission
+                                    <br />
+                                    <br />
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-box-single mb-40">
+                        <div class="service-box-content st-1">
+                            <div class="service-box-content-icon st-1" style="direction: rtl;">
+                                <i class="flaticon-healthcare"></i>
+                            </div>
+                            <div class="service-box-content-text">
+                                <h4>@Localizer["InstitutionalValues"]  </h4>
+                                <p>
+                                    @Model.MainModel.InstitutionalValues
+                                </p>
+                                <br /><br />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </section>
+
+    <!-- choosing area start  -->
+    <section class="choosing__area st-3">
+        <div class="container">
+            <div class="row wow fadeInUp align-items-center">
+                <div class="col-xl-6 col-lg-5">
+                    <div class="choosing__img mb-30 st-3" style="max-width: 75%;">
+                        <div class="choosing__img-inner p-relative st-3">
+                            <div class="choosing__img3-main p-relative">
+                                <img src="/img/about/choosing3-img.jpg" alt="">
+                                <div class="choosing__img-inner-shape">
+                                    <img src="/img/shape/choosing-m-shape.png" alt="">
+                                </div>
+                            </div>
+                            <div class="choosing3-p-element">
+                                <div class="choosing-3-s1">
+                                    <img src="/img/shape/choosing-s1.png" alt="">
+                                </div>
+                                <div class="choosing-3-s2">
+                                    <img src="/img/shape/choosing-s2.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-7">
+                    <div class="choosing__content mb-30">
+
+                        <div class="section-title mb-30" style="direction: ltr;">
+                            <div class="border-right st-3">
+                                <p>@Localizer["OurServices"]</p>
+                            </div>
+
+                        </div>
+                        <ul class="about-points st-1 border-0" style="direction: ltr;">
+                            @foreach (var item in Model.MainModel.OurServices)
+                            {
+                                <li class="st-2">
+                                    <div class="points-heading" style="direction: rtl;">
+                                        <div class="p-icon st-3">
+                                            <img src="/img/@item.Icon" />
+                                        </div>
+                                        <h5>@item.Title</h5>
+                                    </div>
+                                    <div style="direction: rtl;">
+                                        <p>@item.Body</p>
+                                    </div>
+                                </li>
+                            }
+
+                        </ul>
+                        <ul class="about-points st-2" style="direction: ltr;">
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+

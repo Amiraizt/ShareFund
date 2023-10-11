@@ -1,0 +1,35 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IHtmlLocalizer<SharedResource> Localizer
+@model IEnumerable<ContactNumbersModel>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h4 class="text-center offset-md-4 col-md-4"> @Localizer["ContactNumbers"] </h4>
+
+            <div class="tile-title-w-btn">
+             
+            </div>
+            <div class="tile-body">
+                <table class="table table-hover table-bordered" name="sampleTable">
+                    <thead>
+                        <tr>
+                            <th> @Localizer["Number"]</th>
+                         
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.PhoneNumber</td>
+                              
+                               </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,227 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IHtmlLocalizer<SharedResource> Localizer
+@model AdminMainPageModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="app-title">
+    <div>
+        <h1><i class="fa fa-home"></i> @Localizer["HomePage"] </h1>
+
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h5 class="text-center offset-md-4 col-md-4">@Localizer["MainPageSlider"]</h5>
+            <div class="tile-title-w-btn">
+                @*                <h3 class="title"> <p><a asp-action="CreateRound" class="btn btn-primary icon-btn"><i class="fa fa-plus"></i>	</a></p></h3>
+                *@
+                <button type="button" class="btn btn-primary modalTrigger" onclick="ShowSliderImageModel()" data-toggle="modal" data-target="#exampleModal">
+                    <i class="fa fa-lg fa-plus"></i> @Localizer["Add"]
+                </button>
+            </div>
+            <div class="tile-body">
+                <table class="table table-hover table-bordered" name="sampleTable">
+                    <thead>
+                        <tr>
+                            <th>@Localizer["TitleAr"]</th>
+                            <th>@Localizer["TitleEn"]</th>
+                            <th>@Localizer["Image"]</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.Sliders)
+                        {
+                            <tr>
+                                <td>@item.TitleAR</td>
+                                <td>@item.TitleEN</td>
+                                <td><img src="/img/@item.Image" style="width: 200px;height: 100px;"></td>
+                                <td><a class="btn btn-danger" asp-action="DeleteSingleTextByID" asp-route-settingID="@item.ID"><i class="fa fa-lg fa-trash"></i>@Localizer["Delete"]</a></td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h5 class="text-center offset-md-4 col-md-4">@Localizer["GenaralTexts"]</h5>
+            <div class="tile-title-w-btn">
+                @*                <h3 class="title"> <p><a asp-action="CreateRound" class="btn btn-primary icon-btn"><i class="fa fa-plus"></i>	</a></p></h3>
+                *@
+                @*<button type="button" class="btn btn-primary modalTrigger" onclick="ShowSliderImageModel()" data-toggle="modal" data-target="#exampleModal">
+                Add
+                </button>*@
+            </div>
+            <div class="tile-body">
+                <table class="table table-hover table-bordered" name="sampleTable">
+                    <thead>
+                        <tr>
+                            <th>@Localizer["Position"]</th>
+                            <th>@Localizer["TextAr"]</th>
+                            <th>@Localizer["TextEn"]</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td>@Localizer["HomePageAboutShareFund"] </td>
+                            <td>@Model.PriefAboutAr</td>
+                            <td>@Model.PriefAboutEn</td>
+                            <td>
+                                <button type="button" class="btn btn-warning modalTrigger" onclick="ShowModel('@Consts.PriefAboutSetting','@Model.PriefAboutAr','@Model.PriefAboutEn')" data-toggle="modal" data-target="#exampleModal">
+                                    <i class="fa fa-lg fa-edit"></i> @Localizer["Edit"]
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>@Localizer["HomePageMessage"] </td>
+                            <td>@Model.MessageAr</td>
+                            <td>@Model.MessageEn</td>
+                            <td>
+                                <button type="button" class="btn btn-warning modalTrigger" onclick="ShowModel('@Consts.MessageSetting','@Model.MessageAr','@Model.MessageEn')" data-toggle="modal" data-target="#exampleModal">
+                                    <i class="fa fa-lg fa-edit"></i> @Localizer["Edit"]
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>@Localizer["HomePageVision"] </td>
+                            <td>@Model.VissionAr</td>
+                            <td>@Model.VissionEn</td>
+                            <td>
+                                <button type="button" class="btn btn-warning modalTrigger" onclick="ShowModel('@Consts.VissionSetting','@Model.VissionAr', '@Model.VissionEn')" data-toggle="modal" data-target="#exampleModal">
+                                    <i class="fa fa-lg fa-edit"></i> @Localizer["Edit"]
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>@Localizer["HomePageInstitutionalValues"] </td>
+                            <td>@Model.InstitutionalValuesAr</td>
+                            <td>@Model.InstitutionalValuesEn</td>
+                            <td>
+                                <button type="button" class="btn btn-warning modalTrigger" onclick="ShowModel('@Consts.InvusterialValuesSetting','@Model.InstitutionalValuesAr','@Model.InstitutionalValuesEn')" data-toggle="modal" data-target="#exampleModal">
+                                    <i class="fa fa-lg fa-edit"></i> @Localizer["Edit"]
+                                </button>
+                            </td>
+                        </tr>
+                         <tr>
+                            <td>@Localizer["FooterPhones"] </td>
+                            <td>@Model.Phones</td>
+                            <td></td>
+                            <td>
+                                <button type="button" class="btn btn-warning modalTrigger" onclick="ShowSettingModal('@Consts.PhonesSetting','@Model.Phones')" data-toggle="modal" data-target="#exampleModal">
+                                    <i class="fa fa-lg fa-edit"></i> @Localizer["Edit"]
+                                </button>
+                            </td>
+                        </tr>
+                         <tr>
+                            <td>@Localizer["FooterEmail"] </td>
+                            <td>@Model.Email</td>
+                            <td></td>
+                            <td>
+                                <button type="button" class="btn btn-warning modalTrigger" onclick="ShowSettingModal('@Consts.EmailSetting','@Model.Email')" data-toggle="modal" data-target="#exampleModal">
+                                    <i class="fa fa-lg fa-edit"></i> @Localizer["Edit"]
+                                </button>
+                            </td>
+                        </tr>
+                         <tr>
+                            <td>@Localizer["FooterLocation"]</td>
+                            <td>@Model.LocationAr</td>
+                            <td>@Model.LocationEn</td>
+                            <td>
+                                <button type="button" class="btn btn-warning modalTrigger" onclick="ShowModel('@Consts.LocationSetting','@Model.LocationAr','@Model.LocationEn')" data-toggle="modal" data-target="#exampleModal">
+                                    <i class="fa fa-lg fa-edit"></i> @Localizer["Edit"]
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>@Localizer["FaceBook"]</td>
+                            <td>@Model.FaceBookLink</td>
+                            <td>@Model.FaceBookLink</td>
+                            
+                            <td>
+                                <button type="button" class="btn btn-warning modalTrigger" onclick="ShowSettingModal('@Consts.FaceBookLink','@Model.FaceBookLink')" data-toggle="modal" data-target="#exampleModal">
+                                    <i class="fa fa-lg fa-edit"></i> @Localizer["Edit"]
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>@Localizer["Twitter"]</td>
+                            <td>@Model.TwitterLink</td>
+                            <td>@Model.TwitterLink</td>
+
+                            <td>
+                                <button type="button" class="btn btn-warning modalTrigger" onclick="ShowSettingModal('@Consts.TwitterLink','@Model.TwitterLink')" data-toggle="modal" data-target="#exampleModal">
+                                    <i class="fa fa-lg fa-edit"></i> @Localizer["Edit"]
+                                </button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h5 class="text-center offset-md-4 col-md-4">@Localizer["OurServices"]</h5>
+            <div class="tile-title-w-btn">
+                @*                <h3 class="title"> <p><a asp-action="CreateRound" class="btn btn-primary icon-btn"><i class="fa fa-plus"></i>	</a></p></h3>
+                *@
+                <button type="button" class="btn btn-primary modalTrigger" onclick="ShowOurServicesModel()" data-toggle="modal" data-target="#exampleModal">
+                    <i class="fa fa-lg fa-plus"></i>   Add
+                </button>
+            </div>
+            <div class="tile-body">
+                <table class="table table-hover table-bordered" name="sampleTable">
+                    <thead>
+                        <tr>
+                            <th>@Localizer["TitleAr"]</th>
+                            <th>@Localizer["TitleEn"]</th>
+                            <th>@Localizer["BodyAr"] </th>
+                            <th>@Localizer["BodyEn"] </th>
+                            <th>@Localizer["Icon"] </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.OurServices)
+                        {
+                            <tr>
+                                <td>@item.TitleAr</td>
+                                <td>@item.TitleEn</td>
+                                <td>@item.BodyAr</td>
+                                <td>@item.BodyEn</td>
+                                <td><img src="/img/@item.Icon" style="width: 200px;height: 100px;"></td>
+                                <td><a class="btn btn-danger" asp-action="DeleteServiceByID" asp-route-serviceID="@item.ID"> <i class="fa fa-lg fa-trash"></i>@Localizer["Delete"]</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@*<button type="button" class="btn btn-primary modalTrigger" onclick="ShowFileModel('@Consts.MainPageHeaderImageSetting')" data-toggle="modal" data-target="#exampleModal">
+    @Localizer["MainHeaderImage"]
+</button>*@@* <span>@Model.MainHeader</span>*@
+
+
+
+

@@ -1,0 +1,88 @@
+﻿@model ShareFund.Models.News.EditNewsModel
+@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IHtmlLocalizer<SharedResource> Localizer
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="tile-body">
+            <div class="col-md-12">
+                <form asp-action="Edit" enctype="multipart/form-data">
+                    <input asp-for="ID" type="hidden" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="TitleAR" class="control-label"></label>
+                        <input asp-for="TitleAR" class="form-control" />
+                        <span asp-validation-for="TitleAR" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TitleEN" class="control-label"></label>
+                        <input asp-for="TitleEN" class="form-control" />
+                        <span asp-validation-for="TitleEN" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SummaryAR" class="control-label"></label>
+                        <textarea asp-for="SummaryAR" class="form-control"></textarea>
+                        <span asp-validation-for="SummaryAR" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SummaryEN" class="control-label"></label>
+                        <textarea asp-for="SummaryEN" class="form-control"></textarea>
+                        <span asp-validation-for="SummaryEN" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ContentAR" class="control-label"></label>
+                        <textarea asp-for="ContentAR" class="form-control"></textarea>
+                        <span asp-validation-for="ContentAR" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ContentEN" class="control-label"></label>
+                        <textarea asp-for="ContentEN" class="form-control"></textarea>
+                        <span asp-validation-for="ContentEN" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Category" class="control-label"></label>
+                        <select asp-for="Category" class="form-control">
+                            @foreach (var item in ViewBag.Categories as List<CategoryListModel>)
+                            {
+                                if (item.ID == Model.Category)
+                                {
+                                    <option value="@item.ID" selected>@item.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.ID">@item.Name</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="Category" class="text-danger"></span>
+                    </div>
+                    @* <div class="form-group col-md-4">
+
+                    </div>*@
+                    <div class="form-group row">
+
+                        <div class="col-md-6">
+                            <label asp-for="Image" class="control-label"></label>
+                            <input asp-for="Image" class="form-control" />
+                            <span asp-validation-for="Image" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="SecondImage" class="control-label"></label>
+                            <input asp-for="SecondImage" class="form-control" />
+                            <span asp-validation-for="SecondImage" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="@Localizer["Edit"]" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

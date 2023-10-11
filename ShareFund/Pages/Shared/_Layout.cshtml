@@ -1,0 +1,1156 @@
+﻿@using Microsoft.AspNetCore.Localization;
+@using Microsoft.AspNetCore.Mvc.Localization;
+@using Microsoft.Extensions.Options;
+@using System.Globalization;
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+@inject IOptions<RequestLocalizationOptions> LocOptions
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var cultureItems = LocOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+        .ToList();
+    var supportRtl = CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
+    var language = CultureInfo.CurrentCulture;
+}
+<!doctype html>
+<html class="no-js" dir="ltr">
+
+
+<div class="floating-container">
+    <div class="floating-button">+</div>
+    <div class="element-container">
+
+
+        <span class="float-element tooltip-left">
+            <a onclick="ShowPhoneNumberModal()">
+                <i class="material-icons">
+                    phone
+                </i>
+            </a>
+        </span>
+
+
+        <span class="float-element">
+            <a href="mailto:username@domain.com?subject='abc'&body='xyz'">
+                <i class="material-icons">
+                    email
+                </i>
+            </a>
+        </span>
+
+        <span class="float-element">
+            <a onclick="ShowMessageModal()">
+                <i class="material-icons">chat</i>
+            </a>
+        </span>
+    </div>
+</div>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>@Localizer["ShareFundCompanyForMultiInvestments"]</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="~/img/favicon.ico">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Place favicon.ico in the root directory -->
+    <!-- CSS here -->
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/swiper-bundle.css">
+    <link rel="stylesheet" href="~/css/animate.min.css">
+    <link rel="stylesheet" href="~/css/custom-animation.css">
+    <link rel="stylesheet" href="~/css/magnific-popup.css">
+    <link rel="stylesheet" href="~/css/odometer-theme-default.css">
+    <link rel="stylesheet" href="~/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="~/css/flaticon.css">
+
+
+    @if (supportRtl)
+    {
+        <link rel="stylesheet" href="~/css/meanmenu.css">
+
+        <link rel="stylesheet" href="~/css/main.css">
+
+    }
+    else
+    {
+        <link rel="stylesheet" href="~/css/meanmenu.en.css">
+
+        <link rel="stylesheet" href="~/css/main.en.css">
+    }
+</head>
+
+<body>
+    @if (supportRtl)
+    {
+        <!-- header area start  -->
+        <header style="direction: rtl">
+            <div class="header__main header-sticky header">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-2 col-lg-3 col-8">
+                            <div class="logo">
+
+
+                                <a class="logo-text-white" href="/">
+                                    <img src="~/img/logo/logo-orange.png"
+                                     alt="">
+                                </a>
+                                <a class="logo-text-black" href="/">
+                                    <img src="~/img/logo/logo-text-black.png"
+                                     alt="">
+                                </a>
+
+                            </div>
+                        </div>
+                        <div class="col-xl-10 col-lg-9 col-4" style="direction: rtl;">
+                            <div class="header__menu-area f-right">
+
+
+                                <div class="main-menu" style="margin-right: 60px;">
+                                    <nav id="mobile-menu">
+                                        <ul>
+                                            <li>
+                                                <a href="/"> @Localizer["HomePage"] </a>
+                                                <!-- <ul class="sub-menu">
+                                                    <li><a href="/">Home Style 01</a></li>
+                                                    <li><a href="index-02.html">Home Style 02</a></li>
+                                                    <li><a href="index-03.html">Home Style 03</a></li>
+                                                </ul> -->
+                                            </li>
+                                            <li><a href="/aboutUs">@Localizer["AboutCompany"]</a></li>
+                                            <!--  <li class="menu-item-has-children"><a href="services.html">الخدمات</a>
+                                                 <ul class="sub-menu">
+                                                     <li><a href="services.html">Service</a>
+                                                     <li><a href="service-details.html">Service Details</a></li>
+                                                 </ul>
+                                             </li> -->
+                                            <li>
+                                                <a href="/News">@Localizer["CompanyNews"]</a>
+                                                <!--  <ul class="sub-menu">
+                                                     <li><a href="portfolio.html">Portfolio</a>
+                                                     <li><a href="portfolio-details.html">Portf
+                                                     olio Details</a></li>
+                                                 </ul> -->
+                                            </li>
+                                            <li>
+                                                <a href="/FAQ">@Localizer["FAQ"] </a>
+                                                <!-- <ul class="sub-menu">
+                                                    <li><a href="team.html">Team</a></li>
+                                                    <li><a href="pricing.html">Pricing</a></li>
+                                                    <li><a href="404.html">404 Page</a></li>
+                                                    <li><a href="coming.html">Coming Soon</a></li>
+                                                </ul> -->
+                                            </li>
+
+                                        </ul>
+                                    </nav>
+                                </div>
+
+                                <select class="" style="left:0px padding-right: 20px;border: 0px; height: 30px;margin-top: 14px;width: 212px;margin-left: 35px;" onchange="SetCulture(this.value)" asp-for="@requestCulture.RequestCulture.UICulture.Name">
+                                    @foreach (var item in cultureItems)
+                                    {
+                                        <option class="form-select" value="@item.Value">@item.Text</option>
+                                    }
+                                </select>
+                                <div class="header__btn d-none">
+                                    <a href="#" class="grb-btn">@Localizer["Start"]<i class="fas fa-arrow-right"></i></a>
+                                </div>
+                                <ul class="menu-cta-3 d-none d-xl-inline-block">
+                                    <li class="">
+                                        <div class="cta__icon d-none">
+                                            <span><i class="fas fa-phone-alt"></i></span>
+                                        </div>
+                                        <div class="cta__content">
+                                            <!--<p>Call For Estimate</p>
+                                            <span><a href="tel:(555)754789654">(555) 754 789 654</a></span>-->
+                                        </div>
+                                    </li>
+                                </ul>
+
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- header area end -->
+        <!-- side toggle start  -->
+        <div class="fix">
+            <div class="side-info">
+                <div class="side-info-content">
+                    <div class="offset-widget offset-logo mb-30 pb-20">
+                        <div class="row align-items-center">
+                            <div class="col-9">
+                                <a href="/"><img src="~/img/logo/logo.png" alt="Logo"></a>
+                            </div>
+                            <div class="col-3 text-end">
+                                <button class="side-info-close">
+                                    <i class="fal fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mobile-menu d-lg-none"></div>
+                    <div class="offset-widget offset_searchbar mb-30">
+                        <form method="get" action="#">
+                            <div class="offset_search_content">
+                                <input type="search" placeholder="What are you searching for?">
+                                <button type="submit" class="offset_search_button"><i class="fal fa-search"></i></button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="offset-widget mb-40 d-none d-lg-block">
+                        <div class="info-widget">
+                            <h4 class="offset-title mb-20 d-none">@Localizer["AboutCompany"]</h4>
+                            <p class="mb-30">
+                                But I must explain to you how all this mistaken idea of
+                                denouncing pleasure and
+                                praising pain
+                                was born and will give you a complete account of the system and expound the actual teachings
+                                of the great
+                                explore
+                            </p>
+                            <a href="#" class="c-btn btn-round-02 d-none">Contact Us</a>
+                        </div>
+                    </div>
+
+                    <div class="row side-gallery gx-4">
+                        <div class="col-4 mb-20">
+                            <div class="side-image">
+                                <a class="popup-image" href="~/img/portfolio/pm1.jpg">
+                                    <img src="~/img/portfolio/pm1.jpg" alt="sidebar-img">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-4 mb-20">
+                            <div class="side-image">
+                                <a class="popup-image" href="~/img/portfolio/pm2.jpg">
+                                    <img src="~/img/portfolio/pm2.jpg" alt="sidebar-img">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-4 mb-20">
+                            <div class="side-image">
+                                <a class="popup-image" href="~/img/portfolio/pm3.jpg">
+                                    <img src="~/img/portfolio/pm3.jpg" alt="sidebar-img">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-4 mb-20">
+                            <div class="side-image">
+                                <a class="popup-image" href="~/img/portfolio/pm4.jpg">
+                                    <img src="~/img/portfolio/pm4.jpg" alt="sidebar-img">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-4 mb-20">
+                            <div class="side-image">
+                                <a class="popup-image" href="~/img/portfolio/pm5.jpg">
+                                    <img src="~/img/portfolio/pm5.jpg" alt="sidebar-img">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-4 mb-20">
+                            <div class="side-image">
+                                <a class="popup-image" href="~/img/portfolio/pm6.jpg">
+                                    <img src="~/img/portfolio/pm6.jpg" alt="sidebar-img">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="side-map mt-20 mb-30 d-none d-lg-block">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3041981.899057291!2d-87.62979822192196!3d41.878113633413804!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x880e2c3cd0f4cbed%3A0xafe0a6ad09c0c000!2sChicago%2C%20IL%2C%20USA!5e0!3m2!1sen!2sbd!4v1627994034288!5m2!1sen!2sbd"></iframe>
+                    </div>
+
+
+
+                    <div class="contact-infos mt-30 mb-30">
+                        <div class="contact-list mb-30">
+                            <h4>Contact Info</h4>
+                            <a href="#" class="">
+                                <i class="fal fa-map-marker-alt"></i>
+                                <span>
+                                    Johnson Super Street,
+                                    New York, USA 2344
+                                </span>
+                            </a>
+                            <a href="tel:(555)764890345" class="">
+                                <i class="fal fa-phone"></i>
+                                <span>(555) 764 890 345</span>
+                            </a>
+                            <a href="mailto:info@domain.com" class="">
+                                <i class="far fa-envelope"></i>
+                                <span>info@domain.com</span>
+                            </a>
+
+                        </div>
+                        <div class="grb__social footer-social offset-social">
+                            <ul>
+                                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                <li><a href="#"><i class="fab fa-pinterest-p"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="offcanvas-overlay"></div>
+        <!-- side toggle end -->
+        <!-- Fullscreen search -->
+        <div class="search-wrap">
+            <div class="search-inner">
+                <i class="fal fa-times search-close" id="search-close"></i>
+                <div class="search-cell">
+                    <form method="get">
+                        <div class="search-field-holder">
+                            <input type="search" class="main-search-input" placeholder="Search Your Keyword...">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <main>
+            @RenderBody()
+
+
+        </main>
+
+        <footer>
+            <section class="footer-area pt-100 pb-60">
+                <div class="container">
+                    <div class="row wow fadeInUp">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="footer-widget mb-40">
+                                <div class="footer-logo st-3 p-relative">
+                                    <div class="footer-shape-st-3">
+                                        <img src="~/img/shape/foooter-shape-st-3.png" alt="">
+                                    </div>
+                                    <a href="/">
+                                        <img src="~/img/logo/logo-footer2.png" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-8">
+                            <div class="footer-widget mb-40 srv-m">
+                                <div class="footer-widget-title" style="direction: ltr;">
+                                    <h4>@Localizer["DoYouHaveQuestion?ContactUs"]</h4>
+                                </div>
+                                <!--  <div class="contact-address"style="direction: rtl;">
+                                     <div class="contact-heading">
+                                         <h6>لديك سؤال ؟ تواصل معنا</h6>
+                                     </div> -->
+                                <ul class="contact-address-list" style="direction: ltr;">
+
+                                    <li>
+                                        <div class="contact-list-icon st-3">
+                                            <i class="fas fa-phone-alt"></i>
+                                        </div>
+                                        <div class="contact-list-text">
+                                            <span id="footerPhones">0123186494 - 0123162702 - 0123186238</span>
+
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="contact-list-icon st-3">
+                                            <i class="fas fa-envelope"></i>
+                                        </div>
+                                        <div class="contact-list-text">
+                                            <span style="font-size: 16.5px;" id="footerEmail">info@sharefunsd.com</span>
+
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="contact-list-icon st-3">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                        </div>
+                                        <div class="contact-list-text">
+                                            <span id="footerLocation">
+
+                                                المنشية مربع 25 - مقابل وزرة السياحة<br>
+                                                برج المدينة - شقة رقم 503
+
+                                            </span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--   <div class="col-lg-4">
+                              <div class="footer-widget mb-40 srv-m">
+                                  <div class="footer-widget-title" style="direction:rtl;">
+                                      <h4>مواعيد الـعـمـل</h4>
+                                  </div>
+                                  <ul class="worktime-list" style="direction: rtl;">
+                                      <li>
+                                          <h5>السبت - الخميس </h5>
+                                          <span>8:00 am - 4:00 pm</span>
+                                      </li>
+                                      <li>
+                                          <h5>الجمعة: <span> مغلق </span></h5>
+                                      </li>
+                                  </ul>
+                              </div>
+                          </div> -->
+                        <!--<div class="col-lg-2 col-md-6">
+                            <div class="footer-widget mb-40">
+                                <div class="footer-widget-title">
+                                    <h4>My Account</h4>
+                                </div>
+                                <ul class="footer-list st-2 st-3">
+                                    <li><a href="#">My Account</a></li>
+                                    <li><a href="#">Order History</a></li>
+                                    <li><a href="#">Returns</a></li>
+                                    <li><a href="#">Wish List</a></li>
+                                    <li><a href="#">Newsletter</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6">
+                            <div class="footer-widget mb-40 fw3">
+                                <div class="footer-widget-title">
+                                    <h4>Our Company</h4>
+                                </div>
+                                <ul class="footer-list st-2 st-3">
+                                    <li><a href="#">Terms & Conditions</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Affiliates</a></li>
+                                    <li><a href="#">Return Policy</a></li>
+                                    <li><a href="#">Mission & Vision</a></li>
+                                </ul>
+                            </div>
+                        </div>-->
+                        <!--<div class="col-lg-4 col-md-6">
+                            <div class="footer-widget mb-40">
+                                <div class="footer-widget-title">
+                                    <h4>Newsletter</h4>
+                                </div>
+                                <p>There are many variations of passages of Lorem Ipsum available, but the majority.</p>
+                                <form class="subscribe-form mb-30 mt-60 st-3">
+                                    <input type="text" placeholder="Enter your email...">
+                                    <button type="submit"><i class="fas fa-paper-plane"></i>Subscribe</button>
+                                </form>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+            </section>
+            <div class="copyright-area st-2">
+                <div class="container">
+                    <div class="row wow fadeInUp align-items-center">
+                        <div>
+                            <div class="copyright-text st-2 align-items-center">
+
+
+                                <p>@Localizer["Copyright1"]<a href="/identity/Account/Login" style="color: white;"> @Localizer["Copyright2"]</a>@Localizer["Copyright3"]  <a href="https://www.21techis.com/" style="color: white;">@Localizer["TwentyOneTech"] </a></p>
+                            </div>
+                        </div>
+                        <!--<div class="col-lg-6 col-md-6">
+                            <ul class="copyright-list f-right st-2">
+                                <li><a href="#">Terms & Conditions</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                                <li><a href="about.html">About Us</a></li>
+                            </ul>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </footer>
+    }
+    else
+    {
+        <!-- header area start  -->
+        <header style="direction: ltr">
+            <div class="header__main header-sticky header">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-2 col-lg-3 col-8">
+                            <div class="logo">
+
+                                <a class="logo-text-white" href="/">
+                                    <img src="~/img/logo/logo-orange00000.png"
+                                     alt="">
+                                </a>
+                                <a class="logo-text-black" href="/">
+                                    <img src="~/img/logo/logo-text-black0.png"
+                                     alt="">
+                                </a>
+
+                            </div>
+                        </div>
+                        <div class="col-xl-10 col-lg-9 col-4" style="direction: ltr">
+                            <div class="header__menu-area f-right">
+
+
+                                <div class="main-menu" style="margin-right: 60px;">
+                                    <nav id="mobile-menu">
+                                        <ul>
+                                            <li>
+                                                <a href="/"> @Localizer["HomePage"] </a>
+                                                <!-- <ul class="sub-menu">
+                                                    <li><a href="/">Home Style 01</a></li>
+                                                    <li><a href="index-02.html">Home Style 02</a></li>
+                                                    <li><a href="index-03.html">Home Style 03</a></li>
+                                                </ul> -->
+                                            </li>
+                                            <li><a href="/aboutUs">@Localizer["AboutCompany"]</a></li>
+                                            <!--  <li class="menu-item-has-children"><a href="services.html">الخدمات</a>
+                                                 <ul class="sub-menu">
+                                                     <li><a href="services.html">Service</a>
+                                                     <li><a href="service-details.html">Service Details</a></li>
+                                                 </ul>
+                                             </li> -->
+                                            <li>
+                                                <a href="/news">@Localizer["CompanyNews"]</a>
+                                                <!--  <ul class="sub-menu">
+                                                     <li><a href="portfolio.html">Portfolio</a>
+                                                     <li><a href="portfolio-details.html">Portf
+                                                     olio Details</a></li>
+                                                 </ul> -->
+                                            </li>
+                                            <li>
+                                                <a href="/FAQ">@Localizer["FAQ"] </a>
+                                                <!-- <ul class="sub-menu">
+                                                    <li><a href="team.html">Team</a></li>
+                                                    <li><a href="pricing.html">Pricing</a></li>
+                                                    <li><a href="404.html">404 Page</a></li>
+                                                    <li><a href="coming.html">Coming Soon</a></li>
+                                                </ul> -->
+                                            </li>
+
+                                        </ul>
+
+                                    </nav>
+
+                                </div>
+
+                                <select class="" style="padding-left: 20px;border: 0px; height: 30px;margin-top: 14px;width: 180px;margin-left: 35px;" onchange="SetCulture(this.value)" asp-for="@requestCulture.RequestCulture.UICulture.Name">
+                                    @foreach (var item in cultureItems)
+                                    {
+                                        <option class="form-select" value="@item.Value">@item.Text</option>
+                                    }
+                                </select>
+                                @*<div class="switch text-center">
+                            <input id="language-toggle" onchange="SetCulture(this)" class="check-toggle check-toggle-round-flat" type="checkbox">
+                            <label for="language-toggle"></label>
+                            <span class="on">EN</span>
+                            <span class="off">AR</span>
+                            </div>*@
+
+                                <div class="header__btn d-none">
+                                    <a href="#" class="grb-btn">@Localizer["Start"]<i class="fas fa-arrow-right"></i></a>
+                                </div>
+                                <ul class="menu-cta-3 d-none d-xl-inline-block">
+                                    <li class="">
+                                        <div class="cta__icon d-none">
+                                            <span><i class="fas fa-phone-alt"></i></span>
+                                        </div>
+                                        <div class="cta__content">
+                                            <!--<p>Call For Estimate</p>
+                                            <span><a href="tel:(555)754789654">(555) 754 789 654</a></span>-->
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- header area end -->
+        <!-- side toggle start  -->
+        <div class="fix">
+            <div class="side-info">
+                <div class="side-info-content">
+                    <div class="offset-widget offset-logo mb-30 pb-20">
+                        <div class="row align-items-center">
+                            <div class="col-9">
+                                <a href="/"><img src="~/img/logo/logo.png" alt="Logo"></a>
+                            </div>
+                            <div class="col-3 text-end">
+                                <button class="side-info-close">
+                                    <i class="fal fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mobile-menu d-lg-none"></div>
+                    <div class="offset-widget offset_searchbar mb-30">
+                        <form method="get" action="#">
+                            <div class="offset_search_content">
+                                <input type="search" placeholder="What are you searching for?">
+                                <button type="submit" class="offset_search_button"><i class="fal fa-search"></i></button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="offset-widget mb-40 d-none d-lg-block">
+                        <div class="info-widget">
+                            <h4 class="offset-title mb-20 d-none">@Localizer["AboutCompany"]</h4>
+                            <p class="mb-30">
+                                But I must explain to you how all this mistaken idea of
+                                denouncing pleasure and
+                                praising pain
+                                was born and will give you a complete account of the system and expound the actual teachings
+                                of the great
+                                explore
+                            </p>
+                            <a href="#" class="c-btn btn-round-02 d-none">Contact Us</a>
+                        </div>
+                    </div>
+
+                    <div class="row side-gallery gx-4">
+                        <div class="col-4 mb-20">
+                            <div class="side-image">
+                                <a class="popup-image" href="~/img/portfolio/pm1.jpg">
+                                    <img src="~/img/portfolio/pm1.jpg" alt="sidebar-img">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-4 mb-20">
+                            <div class="side-image">
+                                <a class="popup-image" href="~/img/portfolio/pm2.jpg">
+                                    <img src="~/img/portfolio/pm2.jpg" alt="sidebar-img">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-4 mb-20">
+                            <div class="side-image">
+                                <a class="popup-image" href="~/img/portfolio/pm3.jpg">
+                                    <img src="~/img/portfolio/pm3.jpg" alt="sidebar-img">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-4 mb-20">
+                            <div class="side-image">
+                                <a class="popup-image" href="~/img/portfolio/pm4.jpg">
+                                    <img src="~/img/portfolio/pm4.jpg" alt="sidebar-img">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-4 mb-20">
+                            <div class="side-image">
+                                <a class="popup-image" href="~/img/portfolio/pm5.jpg">
+                                    <img src="~/img/portfolio/pm5.jpg" alt="sidebar-img">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-4 mb-20">
+                            <div class="side-image">
+                                <a class="popup-image" href="~/img/portfolio/pm6.jpg">
+                                    <img src="~/img/portfolio/pm6.jpg" alt="sidebar-img">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="side-map mt-20 mb-30 d-none d-lg-block">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3041981.899057291!2d-87.62979822192196!3d41.878113633413804!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x880e2c3cd0f4cbed%3A0xafe0a6ad09c0c000!2sChicago%2C%20IL%2C%20USA!5e0!3m2!1sen!2sbd!4v1627994034288!5m2!1sen!2sbd"></iframe>
+                    </div>
+
+
+
+                    <div class="contact-infos mt-30 mb-30">
+                        <div class="contact-list mb-30">
+                            <h4>Contact Info</h4>
+                            <a href="#" class="">
+                                <i class="fal fa-map-marker-alt"></i>
+                                <span>
+                                    Johnson Super Street,
+                                    New York, USA 2344
+                                </span>
+                            </a>
+                            <a href="tel:(555)764890345" class="">
+                                <i class="fal fa-phone"></i>
+                                <span>(555) 764 890 345</span>
+                            </a>
+                            <a href="mailto:info@domain.com" class="">
+                                <i class="far fa-envelope"></i>
+                                <span>info@domain.com</span>
+                            </a>
+
+                        </div>
+                        <div class="grb__social footer-social offset-social">
+                            <ul>
+                                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                <li><a href="#"><i class="fab fa-pinterest-p"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="offcanvas-overlay"></div>
+        <!-- side toggle end -->
+        <!-- Fullscreen search -->
+        <div class="search-wrap">
+            <div class="search-inner">
+                <i class="fal fa-times search-close" id="search-close"></i>
+                <div class="search-cell">
+                    <form method="get">
+                        <div class="search-field-holder">
+                            <input type="search" class="main-search-input" placeholder="Search Your Keyword...">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <main>
+            @RenderBody()
+        </main>
+
+        <footer style="direction: ltr !important">
+            <section class="footer-area pt-100 pb-60">
+                <div class="container">
+                    <div class="row wow fadeInUp">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="footer-widget mb-40">
+                                <div class="footer-logo st-3 p-relative">
+                                    <div class="footer-shape-st-3">
+                                        <img src="~/img/shape/foooter-shape-st-3.png" alt="">
+                                    </div>
+                                    <a href="/">
+                                        <img src="~/img/logo/logo-footer2.png" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-8">
+                            <div class="footer-widget mb-40 srv-m">
+                                <div class="footer-widget-title" style="direction: ltr;">
+                                    <h4>@Localizer["DoYouHaveQuestion?ContactUs"]</h4>
+                                </div>
+                                <!--  <div class="contact-address"style="direction: rtl;">
+                                     <div class="contact-heading">
+                                         <h6>لديك سؤال ؟ تواصل معنا</h6>
+                                     </div> -->
+                                <ul class="contact-address-list" style="direction: ltr;">
+
+                                    <li>
+                                        <div class="contact-list-icon st-3">
+                                            <i class="fas fa-phone-alt"></i>
+                                        </div>
+                                        <div class="contact-list-text">
+                                            <span id="footerPhones"></span>
+
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="contact-list-icon st-3">
+                                            <i class="fas fa-envelope"></i>
+                                        </div>
+                                        <div class="contact-list-text">
+                                            <span style="font-size: 16.5px;" id="footerEmail"></span>
+
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="contact-list-icon st-3">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                        </div>
+                                        <div class="contact-list-text">
+                                            <span id="footerLocation">
+
+                                                <br>
+
+
+                                            </span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--   <div class="col-lg-4">
+                              <div class="footer-widget mb-40 srv-m">
+                                  <div class="footer-widget-title" style="direction:rtl;">
+                                      <h4>مواعيد الـعـمـل</h4>
+                                  </div>
+                                  <ul class="worktime-list" style="direction: rtl;">
+                                      <li>
+                                          <h5>السبت - الخميس </h5>
+                                          <span>8:00 am - 4:00 pm</span>
+                                      </li>
+                                      <li>
+                                          <h5>الجمعة: <span> مغلق </span></h5>
+                                      </li>
+                                  </ul>
+                              </div>
+                          </div> -->
+                        <!--<div class="col-lg-2 col-md-6">
+                            <div class="footer-widget mb-40">
+                                <div class="footer-widget-title">
+                                    <h4>My Account</h4>
+                                </div>
+                                <ul class="footer-list st-2 st-3">
+                                    <li><a href="#">My Account</a></li>
+                                    <li><a href="#">Order History</a></li>
+                                    <li><a href="#">Returns</a></li>
+                                    <li><a href="#">Wish List</a></li>
+                                    <li><a href="#">Newsletter</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6">
+                            <div class="footer-widget mb-40 fw3">
+                                <div class="footer-widget-title">
+                                    <h4>Our Company</h4>
+                                </div>
+                                <ul class="footer-list st-2 st-3">
+                                    <li><a href="#">Terms & Conditions</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Affiliates</a></li>
+                                    <li><a href="#">Return Policy</a></li>
+                                    <li><a href="#">Mission & Vision</a></li>
+                                </ul>
+                            </div>
+                        </div>-->
+                        <!--<div class="col-lg-4 col-md-6">
+                            <div class="footer-widget mb-40">
+                                <div class="footer-widget-title">
+                                    <h4>Newsletter</h4>
+                                </div>
+                                <p>There are many variations of passages of Lorem Ipsum available, but the majority.</p>
+                                <form class="subscribe-form mb-30 mt-60 st-3">
+                                    <input type="text" placeholder="Enter your email...">
+                                    <button type="submit"><i class="fas fa-paper-plane"></i>Subscribe</button>
+                                </form>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+            </section>
+            <div class="copyright-area st-2">
+                <div class="container">
+                    <div class="row wow fadeInUp align-items-center">
+                        <div>
+                            <div class="copyright-text st-2 align-items-center ">
+
+
+                                <p>@Localizer["Copyright1"]<a href="/identity/Account/Login" style="color: white;"> @Localizer["Copyright2"]</a>@Localizer["Copyright3"]  <a href="https://www.21techis.com/" style="color: white;">@Localizer["TwentyOneTech"] </a></p>
+                            </div>
+                        </div>
+                        <!--<div class="col-lg-6 col-md-6">
+                            <ul class="copyright-list f-right st-2">
+                                <li><a href="#">Terms & Conditions</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                                <li><a href="about.html">About Us</a></li>
+                            </ul>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </footer>
+    }
+
+
+
+    <div class="modal fade" id="phoneNumberModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style=" width: 80%;">
+                <div class="indicator"></div>
+                <div class="modal-header">
+                    <h6 class="modal-title" id="exampleModalLabel">
+                        @Localizer["PleaseInsertYourNumber"]
+                    </h6>
+
+
+                </div>
+                <div class="modal-body" style="background-color: transparent;">
+                    @*                    <div id="loader" class="loading-spinner mb-2" style="display:none;">   </div>
+                    *@                    <div class="input-group" style="padding-bottom: 5px;">
+                        <input name="SettingName" id="Name" hidden value="" />
+                        <div class="form-group col-12">
+                            @*                                <label class="control-label">@Localizer["Number"]</label>
+                            *@                                <input type="text" name="phoneNumber" id="phoneNumber" placeholder="+XXX-XX-XXX-XX-XX" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button type="submit" class="btn" style="width:100%; background-color:#bccd1e;" onclick="saveContactNumber()">@Localizer["Save"]</button>
+                    </div>
+                </div>
+                <div class="row col-md-12 ml-auto mr-auto preview"></div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="indicator"></div>
+                <div class="modal-header">
+                    <button type="button" class="btn-close" onclick="hideSuccesModal()" aria-label="Close"></button>
+
+
+                </div>
+                <div class="modal-body">
+                    <h6>
+                        @Localizer["WeWillCallYouBackLater"]
+                    </h6>
+                </div>
+                <div class="row col-md-12 ml-auto mr-auto preview"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="indicator"></div>
+                <div class="modal-header" style=" background-color: #bccd1e;">
+                    <h6 class="modal-title" style="color:white" id="exampleModalLabel">
+                        @Localizer["Contact"]
+                    </h6>
+
+
+                </div>
+                <div class="modal-body">
+
+                    <div class="container">
+
+                        <h3>@Localizer["QuickContact"]</h3>
+                        <div class="form-group">
+                            <label class="control-label">@Localizer["FullName"] </label>
+                            <input placeholder="Your name" class="form-control" type="text" id="fullName" tabindex="1" required autofocus>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">@Localizer["Email"] </label>
+                            <input placeholder="Your Email Address" class="form-control" id="fromEmail" type="email" tabindex="2" required>
+
+                        </div>
+                         <div class="form-group">
+                            <label class="control-label">@Localizer["Message"] </label>
+                            <textarea placeholder="Type your Message Here...." class="form-control" id="fullMessage" tabindex="5" required></textarea>
+
+                        </div>
+                     
+                        <button class="btn btn-primary" style="margin-top: 20px;" name="submit" onclick="saveMessage()">Submit</button>
+
+
+                    </div>
+                </div>
+                <div class="row col-md-12 ml-auto mr-auto preview"></div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="messageSuccessModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="indicator"></div>
+                <div class="modal-header">
+                    <button type="button" class="btn-close" onclick="hideMessageSuccesModal()" aria-label="Close"></button>
+                  
+
+
+                </div>
+                <div class="modal-body">
+                    
+                    @Localizer["WeWillContactYouBack"]
+                </div>
+                <div class="row col-md-12 ml-auto mr-auto preview"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-loading" data-backdrop="static">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="loading-spinner mb-2"></div>
+                    <div>@Localizer["Sending"]</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS here -->
+    <script src="~/js/vendor/jquery-3.6.0.min.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/swiper-bundle.js"></script>
+    <script src="~/js/isotope.pkgd.min.js"></script>
+    <script src="~/js/jquery.meanmenu.min.js"></script>
+    <script src="~/js/ajax-form.js"></script>
+    <script src="~/js/wow.min.js"></script>
+    <script src="~/js/jquery.scrollUp.min.js"></script>
+    <script src="~/js/odometer.min.js"></script>
+    <script src="~/js/appair.min.js"></script>
+    <script src="~/js/imagesloaded.pkgd.min.js"></script>
+    <script src="~/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/js/plugins.js"></script>
+    <script src="~/js/main.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.copyright-text').attr('style', 'text-align:center')
+            //var userLang = navigator.language || navigator.userLanguage;
+            $.ajax({
+                url: '/homePage/GetFooterInformations?currentLanguage=' + '@language',
+                method: 'GET',
+                success: function (data) {
+                    document.getElementById('footerPhones').innerHTML = data.phones
+                    document.getElementById('footerEmail').innerHTML = data.email
+                    document.getElementById('footerLocation').innerHTML = data.location
+                },
+                error: function () {
+                    document.getElementById('footerPhones').innerHTML = '0123186494 - 0123162702 - 0123186238'
+                    document.getElementById('footerEmail').innerHTML = 'info@sharefunsd.com'
+                    document.getElementById('footerLocation').innerHTML = '\n\n                                            المنشية مربع 25 - مقابل وزرة السياحة<br >\n                                            برج المدينة - شقة رقم 503\n\n                                        '
+                }
+            })
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+
+
+        })
+        function SetCulture(selectedValue) {
+
+
+            var currenturl = window.location.href.split('?')[0];
+            var culture = "?culture=" + selectedValue + "&ui-culture=" + selectedValue;
+            $.ajax({
+
+                url: '/HomePage/SetCulture?culture=' + selectedValue + '&returnUrl=' + window.location.pathname,
+                type: 'POST',
+                dataType: 'json',
+                success: function (data) {
+                    window.location.href = currenturl + culture;
+
+                },
+                error: {
+                    function(XHR) {
+                        alert(XHR)
+                    }
+                }
+
+            });
+
+
+        }
+
+
+        function saveContactNumber() {
+
+            var number = document.getElementById('phoneNumber').value;
+            $('#modal-loading').modal('show');
+            $("#phoneNumberModal").modal("hide");
+            $.ajax({
+
+                url: '/HomePage/SaveContact?phoneNumber=' + number,
+                type: 'POST',
+                dataType: 'json',
+                success: function (data) {
+                    if (data == true) {
+                        $("#modal-loading").modal("hide");
+                        $("#successModal").modal("show");
+                    } else {
+
+                    }
+
+
+
+                },
+                error: {
+                    function(XHR) {
+                        alert(XHR)
+                    }
+                }
+
+            });
+        }
+
+
+        function saveMessage() {
+            $('#modal-loading').modal('show');
+            $("#messageModal").modal("hide");
+            var email = document.getElementById('fromEmail').value;
+            var name = document.getElementById('fullName').value;
+            var message = document.getElementById('fullMessage').value;
+            $.ajax({
+
+                url: '/HomePage/SaveSiteMessage',
+                type: 'POST',
+                data: { FullName: name, FromEmail: email, Message: message },
+                dataType: 'json',
+                success: function (data) {
+                    if (data == true) {
+                        $('#modal-loading').modal('hide');
+
+                        $("#messageSuccessModal").modal("show");
+                    } else {
+
+                    }
+
+
+
+                },
+                error: {
+                    function(XHR) {
+                        alert(XHR)
+                    }
+                }
+
+            });
+        }
+    </script>
+
+    <script>
+
+        function ShowPhoneNumberModal() {
+            $("#phoneNumberModal").modal("show");
+            //$('[name="Name"]').val(Id);
+            //$('#Value').val(currentValue)
+        };
+
+
+
+        function ShowMessageModal() {
+            $("#messageModal").modal("show");
+            //$('[name="Name"]').val(Id);
+            //$('#Value').val(currentValue)
+        };
+        function hideMessageSuccesModal() {
+            $("#messageSuccessModal").modal("hide");
+            //$('[name="Name"]').val(Id);
+            //$('#Value').val(currentValue)
+        };
+
+        function hideSuccesModal() {
+            $("#successModal").modal("hide");
+            //$('[name="Name"]').val(Id);
+            //$('#Value').val(currentValue)
+        };
+
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

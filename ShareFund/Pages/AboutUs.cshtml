@@ -1,0 +1,270 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.Localization;
+@model ShareFund.Pages.AboutUsModel
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+
+@{
+}
+<section class="page-title-area" data-background="/img/bg/coming-bg.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-title-content text-center">
+                    <div class="page-title-heading">
+                        <h1>@Model.AboutCompanyModel.AboutCompany</h1>
+                    </div>
+                    @*<nav class="grb-breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item active" aria-current="page">@Localizer["AboutCompany"]</li>
+                            <li class="breadcrumb-item"><a href="index.html">@Localizer["HomePage"]</a></li>
+
+                        </ol>
+                    </nav>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- page title area end -->
+<!-- about area start  -->
+<section class="about-details pt-140">
+    <div class="container">
+        <div class="row wow fadeInUp align-items-center">
+            <div class="col-lg-6">
+                <div class="about-details-right mb-30">
+                    <p>
+                        @Model.AboutCompanyModel.Message
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="section-title mb-30 center">
+                    <center><h2>@Localizer["Message"]</h2></center>
+                </div>
+            </div>
+
+        </div>
+        <div class="about-details-box mt-30" data-background="
+                /img/bg/coming-bg.jpg">
+            <div class="row wow fadeInUp justify-content-end">
+                <div class="col-xl-6 col-md-10">
+                    <div class="about-details-box-content">
+                        <center><h5>@Localizer["MainCompetitiveAdvantage"]</h5></center>
+                        <center><p>@Model.AboutCompanyModel.CompetitiveAdvantageTitle</p></center>
+                        <ul class="about-points st-ab">
+                            @foreach (var item in Model.AboutCompanyModel.Advantages)
+                            {
+                                <li>
+                                    <div class="points-heading">
+                                        <div class="p-icon">
+                                            <img src="/img/@item.Icon">
+                                        </div>
+                                        <h5>@item.Title</h5>
+                                    </div>
+                                    <p></p>
+                                </li>
+                            }
+                            @*<li>
+                            <div class="points-heading">
+                            <div class="p-icon">
+                            <i class="flaticon-creative-team"></i>
+                            </div>
+                            <h5>الميزة الثانية</h5>
+                            </div>
+                            <p></p>
+                            </li>*@
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- about area end -->
+<!-- skill area start  -->
+
+<br>
+<br>
+<!-- skill area end -->
+<!-- counter area start  -->
+<div class="counter-board-area" data-background="/img/bg/counter-board-bg.jpg">
+    <div class="container">
+        <div class="row wow fadeInUp counter-board-content">
+            @foreach (var item in Model.AboutCompanyModel.Counters)
+            {
+                <div class="col-lg-3 col-sm-6">
+                    <div class="counter-board-single mb-40">
+                        <img src="/img/@item.Icon">
+                        <div class="counter-board-number"><span class="odometer" data-count="@item.Count">00</span>+</div>
+                        <p>@item.Label</p>
+                    </div>
+                </div>
+            }
+           
+        </div>
+    </div>
+</div>
+<!-- counter area end -->
+<!-- team area start  -->
+<section class="team-area grey-bg pt-110 pb-90">
+    <div class="container">
+        <div class="row wow fadeInUp">
+            <div class="col-lg-12">
+                <div class="section-title mb-55 text-center">
+                    <h2>@Localizer["Team"]</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row wow fadeInUp">
+            @foreach (var item in Model.AboutCompanyModel.Members)
+            {
+                <div class="col-lg-3 col-md-6">
+                    <div class="team-member mb-30">
+                        <div class="member-img">
+                            <a href="coming.html"><img style="width:270px;height:352px" src="/img/@item.Image" alt=""></a>
+                        </div>
+                        <div class="member-name p-relative">
+                            <div class="member-name-bg">
+                                <img src="/img/shape/member-name-bg.png" alt="">
+                                <img src="/img/shape/member-name-c-bg.png" alt="">
+                            </div>
+                            <h5><a href="">@item.Name</a></h5>
+                            <span>@item.JobTitle</span>
+                            <div class="member-social">
+                                <i class="far fa-plus"></i>
+                                <ul class="member-social-icons">
+                                    <li><a href="@item.SkypeLink"><i class="fab fa-skype"></i></a></li>
+                                    <li><a href="@item.InstgramLink"><i class="fab fa-instagram-square"></i></a></li>
+                                    <li><a href="@item.TwitterLink"><i class="fab fa-twitter"></i></a></li>
+                                    <li><a href="@item.FacebookLink"><i class="fab fa-facebook-f"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+         @*   <div class="col-lg-3 col-md-6">
+                <div class="team-member mb-30">
+                    <div class="member-img">
+                        <a href="coming.html"><img src="/img/team/team2.jpg" alt=""></a>
+                    </div>
+                    <div class="member-name p-relative">
+                        <div class="member-name-bg">
+                            <img src="/img/shape/member-name-bg.png" alt="">
+                            <img src="/img/shape/member-name-c-bg.png" alt="">
+                        </div>
+                        <h5><a href="coming.html">Daniel David Deo</a></h5>
+                        <span>Programmer</span>
+                        <div class="member-social">
+                            <i class="far fa-plus"></i>
+                            <ul class="member-social-icons">
+                                <li><a href="#"><i class="fab fa-skype"></i></a></li>
+                                <li><a href="#"><i class="fab fa-instagram-square"></i></a></li>
+                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="team-member mb-30">
+                    <div class="member-img">
+                        <a href="coming.html"><img src="/img/team/team3.jpg" alt=""></a>
+                    </div>
+                    <div class="member-name p-relative">
+                        <div class="member-name-bg">
+                            <img src="/img/shape/member-name-bg.png" alt="">
+                            <img src="/img/shape/member-name-c-bg.png" alt="">
+                        </div>
+                        <h5><a href="coming.html">Arman Ariyan</a></h5>
+                        <span>Manager</span>
+                        <div class="member-social">
+                            <i class="far fa-plus"></i>
+                            <ul class="member-social-icons">
+                                <li><a href="#"><i class="fab fa-skype"></i></a></li>
+                                <li><a href="#"><i class="fab fa-instagram-square"></i></a></li>
+                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="team-member mb-30">
+                    <div class="member-img">
+                        <a href="coming.html"><img src="/img/team/team4.jpg" alt=""></a>
+                    </div>
+                    <div class="member-name p-relative">
+                        <div class="member-name-bg">
+                            <img src="/img/shape/member-name-bg.png" alt="">
+                            <img src="/img/shape/member-name-c-bg.png" alt="">
+                        </div>
+                        <h5><a href="coming.html">Shimuel Bappy</a></h5>
+                        <span>UI/UX Designer</span>
+                        <div class="member-social">
+                            <i class="far fa-plus"></i>
+                            <ul class="member-social-icons">
+                                <li><a href="#"><i class="fab fa-skype"></i></a></li>
+                                <li><a href="#"><i class="fab fa-instagram-square"></i></a></li>
+                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+        </div>
+    </div>
+</section>
+<!-- team area end  -->
+<!-- brand area start  -->
+<div class="brand-area pt-100 pb-100">
+    <div class="container">
+        <div class="row wow fadeInUp">
+            <div class="col-12">
+                <div class="swiper-container brand-active">
+                    <div class="swiper-wrapper">
+                        @foreach (var item in Model.AboutCompanyModel.Clients)
+                        {
+                            <div class="swiper-slide">
+                                <div class="single-brand">
+                                    <a href="#"><img src="/img/@item.Image" alt=""></a>
+                                    <a href="#"><img src="/img/@item.Image" alt=""></a>
+                                </div>
+                            </div>
+                        }
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- brand area end -->
+<!-- newsletter area start  -->
+<div class="newsletter-area">
+    <div class="container">
+        <div class="row wow fadeInUp align-items-center">
+            <div class="col-lg-6">
+                <div class="newsletter-text mb-30">
+                    <h4>@Localizer["SubscribeUsForNewsletter"] </h4>
+                    <p>
+                        All the Lorem Ipsum generators on the Internet tend to repeat predefined the Newsletter
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <form class="subscribe-form mb-30">
+                    <input type="text" placeholder="Enter your email...">
+                    <button type="submit"><i class="fas fa-paper-plane"></i>@Localizer["Subscribe"] Subscribe Us</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- newsletter area end -->
